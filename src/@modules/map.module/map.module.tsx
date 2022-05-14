@@ -34,9 +34,10 @@ const initCameras = {
 			'properties': {
 				'hintContent': 'Камера 1',
 				'title': 'Камера 1',
-				'category': 'Полная',
+				'category': 'empty',
 				'district': 'Район 1',
-				'contractor': 'ООО МАЛИНА'
+				'contractor': 'ООО "Чистый город"',
+				'address': 'Анапа, Краснодарский край, Россия'
 			},
 			'options': {
 				'iconLayout': 'default#image',
@@ -46,7 +47,7 @@ const initCameras = {
 		},
 		{
 			'type': 'Feature',
-			'id': 0,
+			'id': 1,
 			'geometry': {
 				'type': 'Point',
 				'coordinates': [
@@ -57,9 +58,10 @@ const initCameras = {
 			'properties': {
 				'hintContent': 'Камера 1',
 				'title': 'Камера 1',
-				'category': 'Полная',
-				'district': 'Район 1',
-				'contractor': 'ООО МАЛИНА'
+				'category': 'full',
+				'district': 'Район 2',
+				'contractor': 'ООО "МАЛИНА"',
+				'address': 'Анапа, Краснодарский край, Россия'
 
 			},
 			'options': {
@@ -134,8 +136,40 @@ export const Map = () => {
 	const [category, setCategory] = useState('')
 	const [district, setDistrict] = useState('')
 	const [contractor, setContractor] = useState('')
-	const [objectManagerFilter, setObjectManagerFilter] = useState(() => () => false)
+	const [objectManagerFilter, setObjectManagerFilter] = useState(() => (object:any) => true)
 
+	const onCategoryChange = (category: string) => {
+		setObjectManagerFilter( () => (object:any) => {
+			const isCategory = category === '' || object.properties.category === category
+			const isDistrict = district === '' || object.properties.district === district
+			const isContractor = contractor === '' || object.properties.contractor === contractor
+			return isCategory && isDistrict && isContractor
+		})
+
+		setCategory(category)
+	}
+
+	const onDistrictChange = (district: string) => {
+		setObjectManagerFilter( () => (object:any) => {
+			const isCategory = category === '' || object.properties.category === category
+			const isDistrict = district === '' || object.properties.district === district
+			const isContractor = contractor === '' || object.properties.contractor === contractor
+			return isCategory && isDistrict && isContractor
+		})
+
+		setDistrict(district)
+	}
+
+	const onContractorChange = (contractor: string) => {
+		setObjectManagerFilter( () => (object:any) => {
+			const isCategory = category === '' || object.properties.category === category
+			const isDistrict = district === '' || object.properties.district === district
+			const isContractor = contractor === '' || object.properties.contractor === contractor
+			return isCategory && isDistrict && isContractor
+		})
+
+		setContractor(contractor)
+	}
 
 	return (
 		<div style={{position: 'relative'}}>
@@ -180,11 +214,11 @@ export const Map = () => {
 						sx={{ width: '200px'}}
 						value={ category }
 						//@ts-ignore
-						onChange={ setCategory }
+						onChange={ onCategoryChange }
 						data={[
 							{ value: '', label: 'Все категории' },
-							{ value: 'Полная', label: 'Полные' },
-							{ value: 'Пустые', label: 'Пустые' },
+							{ value: 'full', label: 'Полные' },
+							{ value: 'empty', label: 'Пустые' },
 						]}
 					/>
 					<Select
@@ -194,13 +228,13 @@ export const Map = () => {
 						zIndex={600}
 						value={ district }
 						//@ts-ignore
-						onChange={ setDistrict }
+						onChange={ onDistrictChange }
 						data={[
 							{ value: '', label: 'Все районы' },
-							{ value: 'район 1', label: 'район 1' },
-							{ value: 'район 2', label: 'район 2' },
-							{ value: 'район 3', label: 'район 3' },
-							{ value: 'район 4', label: 'район 4' },
+							{ value: 'Район 1', label: 'Район 1' },
+							{ value: 'Район 2', label: 'Район 2' },
+							{ value: 'Район 3', label: 'Район 3' },
+							{ value: 'Район 4', label: 'Район 4' },
 						]}
 					/>
 					<Select
@@ -210,18 +244,23 @@ export const Map = () => {
 						zIndex={600}
 						value={ contractor }
 						//@ts-ignore
-						onChange={ setContractor }
+						onChange={ onContractorChange }
 						data={[
 							{ value: '', label: 'Все подрядчики' },
-							{ value: 'ООО МАЛИНА', label: 'ООО МАЛИНА' },
-							{ value: 'ООО ВИШНЯ', label: 'ООО ВИШНЯ' },
-							{ value: 'ООО ЯГОДА', label: 'ООО ЯГОДА' },
-							{ value: 'ООО ЯБЛОКО', label: 'ООО ЯБЛОКО' },
+							{ value: 'ООО "Чистый город"', label: 'ООО "Чистый город"' },
+							{ value: 'ООО "ВИШНЯ"', label: 'ООО "ВИШНЯ"' },
+							{ value: 'ООО "ЯГОДА"', label: 'ООО "ЯГОДА"' },
+							{ value: 'ООО "ЯБЛОКО"', label: 'ООО "ЯБЛОКО"' },
 						]}
 					/>
 				</Group>
 			</Container>
-			<MapGarbage state={ mapState } cameras={ cameras } districts={ districts }/>
+			<MapGarbage
+				state={ mapState }
+				cameras={ cameras }
+				districts={ districts }
+				objectManagerFilter={ objectManagerFilter }
+			/>
 		</div>
 	)
 }
