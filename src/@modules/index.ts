@@ -5,6 +5,7 @@ import {ControlModule} from './control.module'
 import {AuthModule} from './auth.module'
 import {FeedbackFormModule} from './feedbackform.module'
 import {RecommendModule} from './recommend.module'
+import {ContractorsModule} from './contractors.module'
 
 export const CommonModules = [
 	AboutModule,
@@ -13,5 +14,6 @@ export const CommonModules = [
 	RecommendModule,
 	ControlModule,
 	AuthModule,
-	FeedbackFormModule
+	FeedbackFormModule,
+	ContractorsModule
 ]
