@@ -1,10 +1,10 @@
-import React, { useMemo } from 'react'
-import { Header, Menu, Group, Center, Burger, Container } from '@mantine/core'
+import React, {useMemo, useState} from 'react'
+import {Header, Menu, Group, Tabs, Center, Burger, Container, Button} from '@mantine/core'
 import { ChevronDown } from 'tabler-icons-react'
 import { ReactComponent as Logo } from '../../../app.shared/app.assets/images/logo.svg'
-import { NavLink } from 'react-router-dom'
+import {NavLink, useLocation, useNavigate} from 'react-router-dom'
 import { useRecoilState } from 'recoil'
-import { NavbarState } from '../../shell.state'
+import {AuthState, NavbarState} from '../../shell.state'
 import { useId, useScrollLock } from '@mantine/hooks'
 import { useHeaderStyles } from './header.style'
 
@@ -21,14 +21,35 @@ interface HeaderSearchProps {
 export const HeaderMenu = ({ links }: HeaderSearchProps) => {
 
 	const [ show, toggleShow ] = useRecoilState(NavbarState)
+	const [ auth, setAuth] = useRecoilState(AuthState)
 	const [ scrollLocked, setScrollLocked ] = useScrollLock()
 	const { classes } = useHeaderStyles()
 	const uuid = useId()
+	const navigate = useNavigate()
+	const location = useLocation()
+
+	const [activeTab, setActiveTab] = useState(() => {
+		// @ts-ignore
+		const el:any = links.filter((el:any) =>
+			el.link == location.pathname)
+		console.log(el)
+		console.log(links.indexOf(el[0]))
+		// @ts-ignore
+		return links.indexOf(el[0])
+	})
+	const onChange = (active: number, tabKey: string) => {
+		//setActiveTab(active)
+		if (active) {
+			// @ts-ignore
+			navigate(links.at(active-1).link)
+			setActiveTab(active)
+			console.log('tabKey', tabKey)
+		}
+	}
 
 
 	const menuItems = useMemo(
 		() => links.map((link) => {
-
 			const nestedMenuItems = link.links?.map((item) => (
 				<NavLink key={link.link + item.link + uuid} to={link.link + item.link}>
 					<Menu.Item>
@@ -50,9 +71,12 @@ export const HeaderMenu = ({ links }: HeaderSearchProps) => {
 					{nestedMenuItems}
 				</Menu>
 				:
-				<NavLink key={link.label + uuid} to={link.link} className={classes.link}>
-					{link.label}
-				</NavLink>
+				<Tabs.Tab color={'brand'} label={link.label}>
+					{/*<NavLink to={link.link}>*/}
+					{/*{link.label}*/}
+					{/*</NavLink>*/}
+				</Tabs.Tab>
+
 		}),
 		[]
 	)
@@ -68,11 +92,16 @@ export const HeaderMenu = ({ links }: HeaderSearchProps) => {
 				<NavLink to={'/'}>
 					<Logo/>
 				</NavLink>
-				<Group spacing={5} className={classes.links}>
+
+				<Tabs active={activeTab} onTabChange={onChange} variant="pills">
 					{menuItems}
-				</Group>
+				</Tabs>
+				{/*<Group spacing={5} className={classes.links}>*/}
+				{/*	{menuItems}*/}
+				{/*</Group>*/}
 				<Burger opened={show} onClick={toggleNavbar} className={classes.burger} size="sm"/>
 			</div>
+			{/*<Button variant={'filled'}>Авторизация</Button>*/}
 		</Container>
 	</Header>
 }

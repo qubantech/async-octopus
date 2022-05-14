@@ -17,7 +17,7 @@ interface NavbarItem {
 interface NavbarTab {
 	label: string;
 	link: string;
-	links: NavbarItem[];
+	links?: NavbarItem[];
 }
 
 export interface NavbarSegmentedProps {
@@ -66,7 +66,7 @@ export const NavbarSegmented = (
 	const [ section, setSection ] = useState<string>('')
 	const [ active, setActive ] = useState<string>('')
 
-	
+
 	useEffect(() => {
 		setSection(data[0].label)
 		setActive(data[0].label)
@@ -78,20 +78,20 @@ export const NavbarSegmented = (
 			(tabs, tab) => {
 
 				const value = tab.label
-				const links = tab.links.map((item) =>
-					<NavbarMenuItem
-						item={item}
-						classes={classes}
-						cx={cx}
-						active={active}
-						setActive={setActive}
-						key={item.label + uuid}
-					/>
-				)
+				// const links = tab.links.map((item) =>
+				// 	<NavbarMenuItem
+				// 		item={item}
+				// 		classes={classes}
+				// 		cx={cx}
+				// 		active={active}
+				// 		setActive={setActive}
+				// 		key={item.label + uuid}
+				// 	/>
+				// )
 
 				return  {
 					...tabs,
-					[value]: links
+					// [value]: links
 				}
 
 			}, {}

@@ -24,19 +24,26 @@ import { useNavigate } from 'react-router-dom'
 
 const DATA = [
 	{
-		label: 'Demo',
-		link: '',
-		links: [
-			{ link: '/map', label: 'Карта', icon: Receipt2 },
-		]
+		label: 'Главная',
+		link: '/',
 	},
 	{
-		label: 'Template',
-		link: '/template',
-		links: [
-			{ link: '/template', label: 'Template', icon: FileAnalytics },
-		]
+		label: 'Карта',
+		link: '/map'
 	},
+	{
+		label: 'Исполнители',
+		link: '/contractors'
+	},
+	{
+		label: 'Рекомендации',
+		link: '/recommend'
+	},
+	{
+		label: 'Панель управления',
+		link: '/control',
+	},
+
 ]
 
 const Styles = (theme: MantineTheme) => ({
@@ -62,15 +69,15 @@ export const Shell: FC<PropsWithChildren<any>> = ({ children }) => {
 			{ link: 'instagram.com', icon: BrandInstagram },
 		]}
 	/>
-
-	const Navbar = showNavbar
-		? <NavbarSegmented
-			data={DATA}
-			logoutCallback={logoutCallback}
-			userEmail={'example@email.com'}
-			showTabs
-		/>
-		: undefined
+	//
+	// const Navbar = showNavbar
+	// 	? <NavbarSegmented
+	// 		data={DATA}
+	// 		logoutCallback={logoutCallback}
+	// 		userEmail={'example@email.com'}
+	// 		showTabs
+	// 	/>
+	// 	: undefined
 
 	const FabWidget = showNavbar
 		? undefined
@@ -85,7 +92,7 @@ export const Shell: FC<PropsWithChildren<any>> = ({ children }) => {
 		}}/>
 
 
-	return <AppShell header={Header} aside={Navbar} footer={Footer} styles={Styles} fixed padding={0}>
+	return <AppShell header={Header} footer={Footer} styles={Styles} fixed padding={0}>
 		{FabWidget}
 		{children}
 	</AppShell>
