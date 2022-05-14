@@ -27,7 +27,7 @@ const DATA = [
 		label: 'Demo',
 		link: '',
 		links: [
-			{ link: '/map', label: 'Map', icon: Receipt2 },
+			{ link: '/map', label: 'Карта', icon: Receipt2 },
 		]
 	},
 	{

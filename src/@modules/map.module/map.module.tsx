@@ -1,18 +1,61 @@
-import { AspectRatio } from '@mantine/core'
-import React from 'react'
+import React, { useState } from 'react'
+import { MapGarbage } from './components/map-garbage'
+import { Autocomplete, Container } from '@mantine/core'
+
+
+const initData = [
+	{
+		coordinates: [44.900510, 37.320609],
+		value: 'Cam 1'
+	},
+	{
+		coordinates: [44.898163, 37.317609],
+		value: 'Cam 2'
+	},
+
+]
 
 
 export const Map = () => {
+	const [mapState, setMapState] = useState({ center: [44.8857, 37.31992], zoom: 12 })
+	const [value, setValue] = useState('')
 
-	//TODO: replace map
+	const onCameraChange = (value: string) => {
+		console.log('here')
+		setValue(value)
+		const obj = initData.find(o => o.value === value)
+		console.log(obj)
 
-	return <>
-		<AspectRatio ratio={16 / 9}>
-			<iframe
-				src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3025.3063874233135!2d-74.04668908358428!3d40.68924937933441!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25090129c363d%3A0x40c6a5770d25022b!2sStatue%20of%20Liberty%20National%20Monument!5e0!3m2!1sen!2sru!4v1644262070010!5m2!1sen!2sru"
-				title="Google map"
-				frameBorder="0"
-			/>
-		</AspectRatio>
-	</>
+
+		if (obj !== undefined) {
+			const newMapState = { center: obj.coordinates, zoom: 15 }
+			setMapState(newMapState)
+		}
+	}
+
+	return (
+		<div style={{position: 'relative'}}>
+			<Container
+				sx={{
+					position: 'absolute',
+					zIndex: 500,
+					// backgroundColor: 'white',
+					// marginTop: "20px",
+					marginBottom: '-20px',
+					// boxShadow: '0px 10px 15px darkGrey',
+					// borderRadius: '0 0 30px 30px',
+					width: '30vw',
+				}}
+			>
+				<Autocomplete
+					label={'Камера'}
+					placeholder="Pick one"
+					value={ value }
+					data={ initData }
+					onChange={ onCameraChange }
+				/>
+			</Container>
+			<MapGarbage state={ mapState } />
+		</div>
+	)
 }
