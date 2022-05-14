@@ -39,4 +39,15 @@ export const useHeaderStyles = createStyles((theme) => ({
 	linkLabel: {
 		marginRight: 5,
 	},
+
+	tab: {
+		'&:focus': {
+			color: '#5EB059',
+			backgroundColor: '#EEFAEF'
+		},
+		'&:hover': {
+			color: '#5EB059',
+			backgroundColor: '#EEFAEF'
+		}
+	}
 }))

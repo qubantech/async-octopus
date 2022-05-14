@@ -59,6 +59,7 @@ export const Map = () => {
 						value={ value }
 						data={ initData }
 						onChange={ onCameraChange }
+						sx={{zIndex: 501}}
 					/>
 					<Button onClick={ onOpenInfo }>кнопка</Button>
 				</Group>
@@ -67,6 +68,7 @@ export const Map = () => {
 						<Container
 							size={'xs'}
 							sx={{
+								zIndex: 502,
 								backgroundColor: 'white',
 								marginTop: '20px',
 								// marginBottom: '-20px',

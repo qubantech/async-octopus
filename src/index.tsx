@@ -8,7 +8,5 @@ const root = ReactDOM.createRoot(
 )
 
 root.render(
-	<React.StrictMode>
-		<Root/>
-	</React.StrictMode>
+	<Root/>
 )
