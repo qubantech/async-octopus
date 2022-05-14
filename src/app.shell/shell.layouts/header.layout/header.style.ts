@@ -45,5 +45,9 @@ export const useHeaderStyles = createStyles((theme) => ({
 			color: '#5EB059',
 			backgroundColor: '#EEFAEF'
 		},
+		'&:hover': {
+			color: '#5EB059',
+			backgroundColor: '#EEFAEF'
+		}
 	}
 }))
