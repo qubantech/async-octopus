@@ -32,6 +32,10 @@ const DATA = [
 		link: '/map'
 	},
 	{
+		label: 'Написать отзыв',
+		link: '/review	'
+	},
+	{
 		label: 'Исполнители',
 		link: '/contractors'
 	},

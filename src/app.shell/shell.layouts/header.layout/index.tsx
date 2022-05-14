@@ -27,7 +27,7 @@ export const HeaderMenu = ({ links }: HeaderSearchProps) => {
 	const uuid = useId()
 	const navigate = useNavigate()
 	const location = useLocation()
-
+	console.log(auth)
 	const [activeTab, setActiveTab] = useState(() => {
 		// @ts-ignore
 		const el:any = links.filter((el:any) =>
@@ -81,6 +81,39 @@ export const HeaderMenu = ({ links }: HeaderSearchProps) => {
 		[]
 	)
 
+	const unauthMenuItems = useMemo(
+		() => links.slice(0,-3).map((link) => {
+			const nestedMenuItems = link.links?.map((item) => (
+				<NavLink key={link.link + item.link + uuid} to={link.link + item.link}>
+					<Menu.Item>
+						{item.label}
+					</Menu.Item>
+				</NavLink>
+			))
+
+			return nestedMenuItems
+				?
+				<Menu key={link.label + uuid} trigger="hover" delay={0} transitionDuration={0} placement="end" gutter={1} control={
+					<NavLink to={link.link} className={classes.link}>
+						<Center>
+							<span className={classes.linkLabel}>{link.label}</span>
+							<ChevronDown size={12}/>
+						</Center>
+					</NavLink>
+				}>
+					{nestedMenuItems}
+				</Menu>
+				:
+				<Tabs.Tab color={'brand'} label={link.label}>
+					{/*<NavLink to={link.link}>*/}
+					{/*{link.label}*/}
+					{/*</NavLink>*/}
+				</Tabs.Tab>
+
+		}),
+		[]
+	)
+
 	const toggleNavbar = () => {
 		toggleShow(() => !show)
 		setScrollLocked(() => !scrollLocked)
@@ -95,10 +128,12 @@ export const HeaderMenu = ({ links }: HeaderSearchProps) => {
 
 				<Group position={'right'}>
 					<Tabs active={activeTab} onTabChange={onChange} variant="pills">
-						{menuItems}
+						{auth && menuItems || unauthMenuItems}
 					</Tabs>
 					{!auth &&
-						<Button size={'sm'} variant={'filled'}>Авторизация</Button>
+						<Button size={'sm'} variant={'filled'} onClick={()=> navigate('/auth')}>Авторизация</Button>
+						||
+						<Button size={'sm'} variant={'default'} onClick={()=> setAuth(false)}>Выйти</Button>
 					}
 				</Group>
 				{/*<Group spacing={5} className={classes.links}>*/}

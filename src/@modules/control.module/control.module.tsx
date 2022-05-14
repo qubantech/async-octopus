@@ -149,27 +149,27 @@ export const Control = () => {
 				</Grid.Col>
 				<Grid.Col span={8}>
 					<Paper shadow="xs" p="md">
-						<Title mx={10} order={3} mt={10}>Статистика по использованиям</Title>
+						<Title mx={10} order={3} mt={10}>Статистика по подрядчикам</Title>
 						<Group mx={10} my={20}>
 							<StatTable
 								data={[{
-									title: 'Исполнитель 1',
+									title: 'Подрядчик 1',
 									reviews: {positive: 90, negative: 10}
 								},
 								{
-									title: 'Исполнитель 2',
+									title: 'Подрядчик 2',
 									reviews: {positive: 70, negative: 30}
 								},
 								{
-									title: 'Исполнитель 3',
+									title: 'Подрядчик 3',
 									reviews: {positive: 40, negative: 60}
 								},
 								{
-									title: 'Исполнитель 4',
+									title: 'Подрядчик 4',
 									reviews: {positive: 80, negative: 20}
 								},
 								{
-									title: 'Исполнитель 5',
+									title: 'Подрядчик 5',
 									reviews: {positive: 90, negative: 10}
 								}
 								]}/>
