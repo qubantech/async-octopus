@@ -7,6 +7,7 @@ import { useMapStyle } from '../map.style'
 import  cameraImage  from '../assets/camera.svg'
 import {ArrowNarrowRight, Check, Number3, Number4} from 'tabler-icons-react'
 
+
 interface MapGarbageProps {
 	cameras: any,
 	state: any,
