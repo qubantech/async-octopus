@@ -58,6 +58,7 @@ export const HeaderMenu = ({ links }: HeaderSearchProps) => {
 				</NavLink>
 			))
 
+
 			return nestedMenuItems
 				?
 				<Menu key={link.label + uuid} trigger="hover" delay={0} transitionDuration={0} placement="end" gutter={1} control={
@@ -70,7 +71,7 @@ export const HeaderMenu = ({ links }: HeaderSearchProps) => {
 				}>
 					{nestedMenuItems}
 				</Menu>
-				:
+				:/*// @ts-ignore*/
 				<Tabs.Tab color={'brand'} label={link.label} className={classes.tab}>
 					{/*<NavLink to={link.link}>*/}
 					{/*{link.label}*/}
@@ -133,7 +134,10 @@ export const HeaderMenu = ({ links }: HeaderSearchProps) => {
 					{!auth &&
 						<Button size={'sm'} variant={'filled'} onClick={()=> navigate('/auth')}>Авторизация</Button>
 						||
-						<Button size={'sm'} variant={'default'} onClick={()=> setAuth(false)}>Выйти</Button>
+						<Button size={'sm'} variant={'default'} onClick={()=> {
+							setAuth(false)
+							navigate('/')
+						}}>Выйти</Button>
 					}
 				</Group>
 				{/*<Group spacing={5} className={classes.links}>*/}
