@@ -25,7 +25,7 @@ import { useNavigate } from 'react-router-dom'
 const DATA = [
 	{
 		label: 'Главная',
-		link: '/',
+		link: '/'
 	},
 	{
 		label: 'Карта',

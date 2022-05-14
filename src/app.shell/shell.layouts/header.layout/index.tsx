@@ -39,9 +39,9 @@ export const HeaderMenu = ({ links }: HeaderSearchProps) => {
 	})
 	const onChange = (active: number, tabKey: string) => {
 		//setActiveTab(active)
-		if (active) {
+		if (active || active == 0) {
 			// @ts-ignore
-			navigate(links.at(active-1).link)
+			navigate(links.at(active).link)
 			setActiveTab(active)
 			console.log('tabKey', tabKey)
 		}
@@ -93,9 +93,14 @@ export const HeaderMenu = ({ links }: HeaderSearchProps) => {
 					<Logo/>
 				</NavLink>
 
-				<Tabs active={activeTab} onTabChange={onChange} variant="pills">
-					{menuItems}
-				</Tabs>
+				<Group position={'right'}>
+					<Tabs active={activeTab} onTabChange={onChange} variant="pills">
+						{menuItems}
+					</Tabs>
+					{!auth &&
+						<Button size={'sm'} variant={'filled'}>Авторизация</Button>
+					}
+				</Group>
 				{/*<Group spacing={5} className={classes.links}>*/}
 				{/*	{menuItems}*/}
 				{/*</Group>*/}
