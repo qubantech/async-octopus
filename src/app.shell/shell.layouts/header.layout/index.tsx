@@ -71,7 +71,7 @@ export const HeaderMenu = ({ links }: HeaderSearchProps) => {
 					{nestedMenuItems}
 				</Menu>
 				:
-				<Tabs.Tab color={'brand'} label={link.label}>
+				<Tabs.Tab color={'brand'} label={link.label} className={classes.tab}>
 					{/*<NavLink to={link.link}>*/}
 					{/*{link.label}*/}
 					{/*</NavLink>*/}
