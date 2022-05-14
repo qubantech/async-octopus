@@ -21,12 +21,12 @@ const MANTINE_DEFAULT_PROPS = {
 		},
 	},
 }
-
+//EEFAEF
 
 const MANTINE_THEME: MantineThemeOverride = {
 	fontFamily: 'Greycliff CF',
 	colors: {
-		brand: ['#67BD63', '#67BD63', '#67BD63', '#67BD63', '#67BD63', '#67BD63', '#67BD63', '#67BD63', '#67BD63','#67BD63' ],
+		brand: ['#67BD63', '#67BD63', '#67BD63', '#67BD63', '#67BD63', '#67BD63', '#67BD63', '#67BD63', '#FFFFFF','#FFFFFF' ],
 	},
 	primaryColor: 'brand',
 }
