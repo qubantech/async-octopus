@@ -7,6 +7,7 @@ import { useRecoilState } from 'recoil'
 import {AuthState, NavbarState} from '../../shell.state'
 import { useId, useScrollLock } from '@mantine/hooks'
 import { useHeaderStyles } from './header.style'
+import {Notifications} from './components/notifications.components'
 
 
 interface HeaderSearchProps {
@@ -49,7 +50,7 @@ export const HeaderMenu = ({ links }: HeaderSearchProps) => {
 
 
 	const menuItems = useMemo(
-		() => links.map((link) => {
+		() => links.slice(0,1).concat(links.slice(3)).map((link) => {
 			const nestedMenuItems = link.links?.map((item) => (
 				<NavLink key={link.link + item.link + uuid} to={link.link + item.link}>
 					<Menu.Item>
@@ -83,7 +84,7 @@ export const HeaderMenu = ({ links }: HeaderSearchProps) => {
 	)
 
 	const unauthMenuItems = useMemo(
-		() => links.slice(0,-3).map((link) => {
+		() => links.slice(0,-2).map((link) => {
 			const nestedMenuItems = link.links?.map((item) => (
 				<NavLink key={link.link + item.link + uuid} to={link.link + item.link}>
 					<Menu.Item>
@@ -134,10 +135,13 @@ export const HeaderMenu = ({ links }: HeaderSearchProps) => {
 					{!auth &&
 						<Button size={'sm'} variant={'filled'} onClick={()=> navigate('/auth')}>Авторизация</Button>
 						||
-						<Button size={'sm'} variant={'default'} onClick={()=> {
-							setAuth(false)
-							navigate('/')
-						}}>Выйти</Button>
+						<>
+							<Notifications/>
+							<Button size={'sm'} variant={'default'} onClick={()=> {
+								setAuth(false)
+								navigate('/')
+							}}>Выйти</Button>
+						</>
 					}
 				</Group>
 				{/*<Group spacing={5} className={classes.links}>*/}

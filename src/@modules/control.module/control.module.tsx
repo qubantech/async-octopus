@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {Button, Container, Group, Title, Paper, Grid, Text, Select, Progress, ColorSwatch} from '@mantine/core'
 import {
 	AnimatedAxis, // any of these can be non-animated equivalents
@@ -9,6 +9,8 @@ import {
 } from '@visx/xychart'
 import {curveNatural} from '@visx/curve'
 import {StatTable} from './components/stat-table'
+import {appContractorService} from '../../app.shared/app.services/contractors.service'
+import {Contractors} from '../../app.shared/app.models'
 
 const data1 = [
 	{x: '2022-04-16', y: 60},
@@ -59,6 +61,15 @@ const customTheme = buildChartTheme({
 })
 
 export const Control = () => {
+	const [contactors, setContactors] = useState<Contractors[]>()
+	useEffect(() => {
+		appContractorService.getContractors()
+			.then(resp => {
+				setContactors(resp)
+				console.log(resp)
+			})
+
+	},[])
 	return (
 		<Container>
 			<Group mt={30} mb={20} position={'apart'}>
@@ -82,33 +93,35 @@ export const Control = () => {
 					variant={'unstyled'}
 					/>
 				</Group>
-				<XYChart height={300} theme={customTheme} xScale={{type: 'band'}} yScale={{type: 'linear'}}>
-					<AnimatedAxis orientation="bottom"/>
-					<AnimatedAxis orientation="right" label={'Процент выполнения'}/>
-					<AnimatedAxis orientation={'left'} label={'Процент выполнения'}/>
-					<AnimatedGrid rows={false} numTicks={30}/>
-					<AnimatedLineSeries color={'#67BD63'} curve={curveNatural} dataKey="План работы"
-						data={data1} {...accessors} />
-					<Tooltip
-						snapTooltipToDatumX
-						snapTooltipToDatumY
-						showVerticalCrosshair
-						showSeriesGlyphs
-						renderTooltip={({tooltipData, colorScale}) => (
-							<div>
-								{/*//@ts-ignore*/}
-								<div style={{color: colorScale(tooltipData.nearestDatum.key)}}>
+				<Group mx={5}>
+					<XYChart height={300} theme={customTheme} xScale={{type: 'band'}} yScale={{type: 'linear'}}>
+						<AnimatedAxis orientation="bottom"/>
+						<AnimatedAxis orientation="right" label={'Процент выполнения'}/>
+						<AnimatedAxis orientation={'left'} label={'Процент выполнения'}/>
+						<AnimatedGrid rows={false} numTicks={30}/>
+						<AnimatedLineSeries color={'#67BD63'} curve={curveNatural} dataKey="План работы"
+							data={data1} {...accessors} />
+						<Tooltip
+							snapTooltipToDatumX
+							snapTooltipToDatumY
+							showVerticalCrosshair
+							showSeriesGlyphs
+							renderTooltip={({tooltipData, colorScale}) => (
+								<div>
 									{/*//@ts-ignore*/}
-									{tooltipData.nearestDatum.key}
+									<div style={{color: colorScale(tooltipData.nearestDatum.key)}}>
+										{/*//@ts-ignore*/}
+										{tooltipData.nearestDatum.key}
+									</div>
+									{/*//@ts-ignore*/}
+									{accessors.yAccessor(tooltipData.nearestDatum.datum)}%
+									{/*//@ts-ignore*/}
+									({accessors.xAccessor(tooltipData.nearestDatum.datum)})
 								</div>
-								{/*//@ts-ignore*/}
-								{accessors.yAccessor(tooltipData.nearestDatum.datum)}%
-								{/*//@ts-ignore*/}
-								({accessors.xAccessor(tooltipData.nearestDatum.datum)})
-							</div>
-						)}
-					/>
-				</XYChart>
+							)}
+						/>
+					</XYChart>
+				</Group>
 			</Paper>
 			<Paper shadow="xs" p="md" mb={15}>
 				<Group mt={10} mb={20} mx={10} spacing={10}>

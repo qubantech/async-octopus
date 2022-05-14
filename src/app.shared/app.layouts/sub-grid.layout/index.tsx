@@ -11,18 +11,19 @@ export function SubGrid () {
 	const theme = useMantineTheme()
 	return (
 		<Container my="md">
-			<SimpleGrid cols={ 4 } breakpoints={ [ { maxWidth: 'xs', cols: 1 } ] }>
-				{ getChild(BASE_HEIGHT) }
-				<Group direction="column">
-					{ getChild(getSubHeight(2, theme.spacing.md)) }
-					{ getChild(getSubHeight(2, theme.spacing.md)) }
-				</Group>
-				<Group direction="column">
-					{ getChild(getSubHeight(3, theme.spacing.md)) }
-					{ getChild(getSubHeight(3, theme.spacing.md)) }
-					{ getChild(getSubHeight(3, theme.spacing.md)) }
-				</Group>
-				{ getChild(BASE_HEIGHT) }
+			<SimpleGrid cols={ 3 } breakpoints={ [ { maxWidth: 'xs', cols: 1 } ] }>
+
+				{/*{ getChild(BASE_HEIGHT) }*/}
+				{/*<Group direction="column">*/}
+				{/*	{ getChild(getSubHeight(2, theme.spacing.md)) }*/}
+				{/*	{ getChild(getSubHeight(2, theme.spacing.md)) }*/}
+				{/*</Group>*/}
+				{/*<Group direction="column">*/}
+				{/*	{ getChild(getSubHeight(3, theme.spacing.md)) }*/}
+				{/*	{ getChild(getSubHeight(3, theme.spacing.md)) }*/}
+				{/*	{ getChild(getSubHeight(3, theme.spacing.md)) }*/}
+				{/*</Group>*/}
+				{/*{ getChild(BASE_HEIGHT) }*/}
 			</SimpleGrid>
 		</Container>
 	)

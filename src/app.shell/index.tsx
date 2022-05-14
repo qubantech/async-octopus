@@ -36,10 +36,6 @@ const DATA = [
 		link: '/feedback'
 	},
 	{
-		label: 'Исполнители',
-		link: '/contractors'
-	},
-	{
 		label: 'Рекомендации',
 		link: '/recommend'
 	},
@@ -88,7 +84,6 @@ export const Shell: FC<PropsWithChildren<any>> = ({ children }) => {
 
 
 	return <AppShell header={Header} footer={Footer} styles={Styles} fixed padding={0}>
-		{FabWidget}
 		{children}
 	</AppShell>
 
