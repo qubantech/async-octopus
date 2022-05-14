@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 
-export const API_URL = 'http://192.168.240.32:5000'
+export const API_URL = 'https://api.quban.tech'
 
 export const ENDPOINTS = {
 	CONTRACTORS: () => API_URL + '/contractors',
