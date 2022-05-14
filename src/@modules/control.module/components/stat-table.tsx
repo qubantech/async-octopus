@@ -34,10 +34,10 @@ export function StatTable({data}: TableReviewsProps) {
 				</td>
 				<td>
 					<Group position="apart">
-						<Text size="xs" color="teal" weight={700}>
+						<Text size="xs" color="brand" weight={700}>
 							{positiveReviews.toFixed(0)}%
 						</Text>
-						<Text size="xs" color="red" weight={700}>
+						<Text size="xs" color="#FF7917" weight={700}>
 							{negativeReviews.toFixed(0)}%
 						</Text>
 					</Group>
@@ -46,11 +46,11 @@ export function StatTable({data}: TableReviewsProps) {
 						sections={[
 							{
 								value: positiveReviews,
-								color: theme.colorScheme === 'dark' ? theme.colors.teal[9] : theme.colors.teal[6],
+								color: 'brand',
 							},
 							{
 								value: negativeReviews,
-								color: theme.colorScheme === 'dark' ? theme.colors.red[9] : theme.colors.red[6],
+								color: '#FF7917',
 							},
 						]}
 					/>

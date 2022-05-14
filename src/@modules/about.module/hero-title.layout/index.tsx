@@ -104,19 +104,18 @@ export function HeroTitle() {
 					<Button
 						size="xl"
 						className={classes.control}
-						variant="gradient"
-						gradient={{ from: 'blue', to: 'cyan' }}
 					>
-                        Show something
+                        Открыть карту
 					</Button>
 					<Button
+						size={'xl'}
 						component="a"
 						href="https://github.com"
 						variant="outline"
+						color={'dark'}
 						className={cx(classes.control, classes.githubControl)}
-						color={theme.colorScheme === 'dark' ? 'gray' : 'dark'}
 					>
-						<BrandGithub />
+						Написать жалобу
 					</Button>
 				</Group>
 			</Container>

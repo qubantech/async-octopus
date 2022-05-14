@@ -7,6 +7,7 @@ import { useRecoilState } from 'recoil'
 import {AuthState, NavbarState} from '../../shell.state'
 import { useId, useScrollLock } from '@mantine/hooks'
 import { useHeaderStyles } from './header.style'
+import {Notifications} from './components/notifications.components'
 
 
 interface HeaderSearchProps {
@@ -27,7 +28,7 @@ export const HeaderMenu = ({ links }: HeaderSearchProps) => {
 	const uuid = useId()
 	const navigate = useNavigate()
 	const location = useLocation()
-
+	console.log(auth)
 	const [activeTab, setActiveTab] = useState(() => {
 		// @ts-ignore
 		const el:any = links.filter((el:any) =>
@@ -49,7 +50,41 @@ export const HeaderMenu = ({ links }: HeaderSearchProps) => {
 
 
 	const menuItems = useMemo(
-		() => links.map((link) => {
+		() => links.slice(0,1).concat(links.slice(3)).map((link) => {
+			const nestedMenuItems = link.links?.map((item) => (
+				<NavLink key={link.link + item.link + uuid} to={link.link + item.link}>
+					<Menu.Item>
+						{item.label}
+					</Menu.Item>
+				</NavLink>
+			))
+
+
+			return nestedMenuItems
+				?
+				<Menu key={link.label + uuid} trigger="hover" delay={0} transitionDuration={0} placement="end" gutter={1} control={
+					<NavLink to={link.link} className={classes.link}>
+						<Center>
+							<span className={classes.linkLabel}>{link.label}</span>
+							<ChevronDown size={12}/>
+						</Center>
+					</NavLink>
+				}>
+					{nestedMenuItems}
+				</Menu>
+				:/*// @ts-ignore*/
+				<Tabs.Tab color={'brand'} label={link.label} className={classes.tab}>
+					{/*<NavLink to={link.link}>*/}
+					{/*{link.label}*/}
+					{/*</NavLink>*/}
+				</Tabs.Tab>
+
+		}),
+		[]
+	)
+
+	const unauthMenuItems = useMemo(
+		() => links.slice(0,-2).map((link) => {
 			const nestedMenuItems = link.links?.map((item) => (
 				<NavLink key={link.link + item.link + uuid} to={link.link + item.link}>
 					<Menu.Item>
@@ -71,7 +106,7 @@ export const HeaderMenu = ({ links }: HeaderSearchProps) => {
 					{nestedMenuItems}
 				</Menu>
 				:
-				<Tabs.Tab color={'brand'} label={link.label} className={classes.tab}>
+				<Tabs.Tab color={'brand'} label={link.label}>
 					{/*<NavLink to={link.link}>*/}
 					{/*{link.label}*/}
 					{/*</NavLink>*/}
@@ -95,10 +130,18 @@ export const HeaderMenu = ({ links }: HeaderSearchProps) => {
 
 				<Group position={'right'}>
 					<Tabs active={activeTab} onTabChange={onChange} variant="pills">
-						{menuItems}
+						{auth && menuItems || unauthMenuItems}
 					</Tabs>
 					{!auth &&
-						<Button size={'sm'} variant={'filled'}>Авторизация</Button>
+						<Button size={'sm'} variant={'filled'} onClick={()=> navigate('/auth')}>Авторизация</Button>
+						||
+						<>
+							<Notifications/>
+							<Button size={'sm'} variant={'default'} onClick={()=> {
+								setAuth(false)
+								navigate('/')
+							}}>Выйти</Button>
+						</>
 					}
 				</Group>
 				{/*<Group spacing={5} className={classes.links}>*/}

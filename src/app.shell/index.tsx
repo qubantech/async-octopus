@@ -32,8 +32,8 @@ const DATA = [
 		link: '/map'
 	},
 	{
-		label: 'Исполнители',
-		link: '/contractors'
+		label: 'Написать отзыв',
+		link: '/feedback'
 	},
 	{
 		label: 'Рекомендации',
@@ -69,15 +69,6 @@ export const Shell: FC<PropsWithChildren<any>> = ({ children }) => {
 			{ link: 'instagram.com', icon: BrandInstagram },
 		]}
 	/>
-	//
-	// const Navbar = showNavbar
-	// 	? <NavbarSegmented
-	// 		data={DATA}
-	// 		logoutCallback={logoutCallback}
-	// 		userEmail={'example@email.com'}
-	// 		showTabs
-	// 	/>
-	// 	: undefined
 
 	const FabWidget = showNavbar
 		? undefined
@@ -93,7 +84,6 @@ export const Shell: FC<PropsWithChildren<any>> = ({ children }) => {
 
 
 	return <AppShell header={Header} footer={Footer} styles={Styles} fixed padding={0}>
-		{FabWidget}
 		{children}
 	</AppShell>
 
