@@ -4,11 +4,13 @@ import { AboutModule } from './about.module'
 import {ControlModule} from './control.module'
 import {AuthModule} from './auth.module'
 import {FeedbackFormModule} from './feedbackform.module'
+import {RecommendModule} from './recommend.module'
 
 export const CommonModules = [
 	AboutModule,
 	NothingFoundModule,
 	MapModule,
+	RecommendModule,
 	ControlModule,
 	AuthModule,
 	FeedbackFormModule

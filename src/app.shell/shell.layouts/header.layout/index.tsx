@@ -41,16 +41,24 @@ export const HeaderMenu = ({ links }: HeaderSearchProps) => {
 	const onChange = (active: number, tabKey: string) => {
 		//setActiveTab(active)
 		if (active || active == 0) {
-			// @ts-ignore
-			navigate(links.at(active).link)
-			setActiveTab(active)
+			console.log(active)
+			if (auth && (active == 2 || active == 3)) {
+				setActiveTab(active+1)
+				// @ts-ignore
+				navigate(links.at(active+1).link)
+			}
+			else {
+				setActiveTab(active)
+				// @ts-ignore
+				navigate(links.at(active).link)
+			}
 			console.log('tabKey', tabKey)
 		}
 	}
 
 
 	const menuItems = useMemo(
-		() => links.slice(0,1).concat(links.slice(3)).map((link) => {
+		() => links.slice(0,2).concat(links.slice(3,5)).map((link) => {
 			const nestedMenuItems = link.links?.map((item) => (
 				<NavLink key={link.link + item.link + uuid} to={link.link + item.link}>
 					<Menu.Item>

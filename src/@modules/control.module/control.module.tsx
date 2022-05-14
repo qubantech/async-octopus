@@ -45,6 +45,19 @@ const data1 = [
 	{x: '2022-05-15', y: 80},
 ]
 
+type ContractorsData = {
+	title: string;
+	reviews: { positive: number; negative: number };
+}
+
+const InitStateContractorsData:ContractorsData = {
+	title: 'q',
+	reviews: {
+		positive: 1,
+		negative: 1
+	}
+}
+
 const accessors = {
 	//@ts-ignore
 	xAccessor: d => d.x,
@@ -61,12 +74,24 @@ const customTheme = buildChartTheme({
 })
 
 export const Control = () => {
-	const [contactors, setContactors] = useState<Contractors[]>()
+	const [contactors, setContactors] = useState<ContractorsData[]>([InitStateContractorsData])
+
 	useEffect(() => {
 		appContractorService.getContractors()
 			.then(resp => {
-				setContactors(resp)
 				console.log(resp)
+				const tempArray:ContractorsData[] = []
+				resp.map((el)=>{
+					const rand:number = Math.random() * 100
+					tempArray.push({
+						title: el.legalEntityName,
+						reviews: {
+							positive: rand,
+							negative: 100 - rand
+						}
+					})
+				})
+				setContactors(tempArray)
 			})
 
 	},[])
@@ -143,9 +168,11 @@ export const Control = () => {
 				/>
 				<Group align={'self-start'} mt={20} mb={10} mx={10}>
 					<ColorSwatch size={20} color={'#67BD63'}/>
-					<Text weight={600}>Выполненный график</Text>
+					<Text weight={600} mr={15}>Выполнено в рамках графика</Text>
 					<ColorSwatch size={20} color={'#FF7917'}/>
-					<Text weight={600}>Просрочено</Text>
+					<Text weight={600} mr={15}>Просрочено в рамках нормы</Text>
+					<ColorSwatch size={20} color={'red'}/>
+					<Text weight={600}>Просрочено в нарушение норм</Text>
 				</Group>
 			</Paper>
 			<Grid align={'stretch'} mb={15}>
@@ -165,27 +192,7 @@ export const Control = () => {
 						<Title mx={10} order={3} mt={10}>Статистика по подрядчикам</Title>
 						<Group mx={10} my={20}>
 							<StatTable
-								data={[{
-									title: 'Подрядчик 1',
-									reviews: {positive: 90, negative: 10}
-								},
-								{
-									title: 'Подрядчик 2',
-									reviews: {positive: 70, negative: 30}
-								},
-								{
-									title: 'Подрядчик 3',
-									reviews: {positive: 40, negative: 60}
-								},
-								{
-									title: 'Подрядчик 4',
-									reviews: {positive: 80, negative: 20}
-								},
-								{
-									title: 'Подрядчик 5',
-									reviews: {positive: 90, negative: 10}
-								}
-								]}/>
+								data={contactors}/>
 						</Group>
 						<Group position={'right'}>
 							<Button variant={'filled'}>Подробнее</Button>

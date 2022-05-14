@@ -29,6 +29,10 @@ const MANTINE_THEME: MantineThemeOverride = {
 		brand: ['#67BD63', '#67BD63', '#67BD63', '#67BD63', '#67BD63', '#67BD63', '#67BD63', '#67BD63', '#FFFFFF','#FFFFFF' ],
 	},
 	primaryColor: 'brand',
+	headings: {
+		fontFamily: 'Greycliff CF',
+		fontWeight: 600
+	}
 }
 
 
@@ -59,7 +63,7 @@ const GLOBAL_STYLES = [
 	},
 	{
 		'@font-face': {
-			fontFamily: 'Greycliff CF',
+			// fontFamily: 'Greycliff CF',
 			src: `url('${fontBold}') format("woff2")`,
 			fontWeight: 700,
 			fontStyle: 'normal',

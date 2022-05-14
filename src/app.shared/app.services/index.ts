@@ -9,7 +9,7 @@ export const ENDPOINTS = {
 
 export const $api = axios.create({
 	headers: {
-		'Access-Control-Allow-Credentials	': '*',
+		'Access-Control-Allow-Credentials': '*',
 	},
 	withCredentials: true,
 })
