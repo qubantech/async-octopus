@@ -1,5 +1,6 @@
 import React from 'react'
 import {createStyles, Table, Progress, Anchor, Text, Group, ScrollArea} from '@mantine/core'
+import {Link, useNavigate} from 'react-router-dom'
 
 const useStyles = createStyles((theme) => ({
 	progressBar: {
@@ -18,6 +19,7 @@ interface TableReviewsProps {
 
 export function StatTable({data}: TableReviewsProps) {
 	const {classes, theme} = useStyles()
+	const nav = useNavigate()
 
 	const rows = data.map((row, index) => {
 		const totalReviews = row.reviews.negative + row.reviews.positive
@@ -25,12 +27,14 @@ export function StatTable({data}: TableReviewsProps) {
 		const negativeReviews = (row.reviews.negative / totalReviews) * 100
 
 		return (
-			<tr key={row.title}>
+			<tr key={row.title} onClick={() => nav('/contractors/' + index.toString())}>
 				<td>
-					<Text color={'brand'}>№{index+1}</Text>
+					<Text color={'brand'}>№{index + 1}</Text>
 				</td>
 				<td>
-					{row.title}
+					<Link style={{color:'#000000'}} to={'/contractors/' + index.toString()}>
+						{row.title}
+					</Link>
 				</td>
 				<td>
 					<Group position="apart">
