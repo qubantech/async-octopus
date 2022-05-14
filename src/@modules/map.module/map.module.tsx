@@ -3,7 +3,6 @@ import {MapGarbage} from './components/map-garbage'
 import {Autocomplete, Container, Group, Select } from '@mantine/core'
 import placemark from './assets/Placemark.svg'
 import { MapPin, Search } from 'tabler-icons-react'
-import { useMapStyles } from './components/map.style'
 
 import  initialDistricts  from './assets/anapa-districts.json'
 
@@ -74,18 +73,11 @@ const initCameras = {
 
 
 export const Map = () => {
-	const { classes } = useMapStyles()
 
 	const [mapState, setMapState] = useState({center: [44.8857, 37.31992], zoom: 13})
 	const [camera, setCamera] = useState('')
-	const [isOpen, setIsOpen] = useState(false)
 	const [districts, setDistricts] = useState(initialDistricts)
-
 	const [cameras, setCameras] = useState(initCameras)
-
-	const [category, setCategory] = useState('')
-	const [district, setDistrict] = useState('')
-	const [contractor, setContractor] = useState('')
 
 	// useEffect(() => {
 	// 	const tempCameras = {
@@ -138,10 +130,12 @@ export const Map = () => {
 		}
 	}
 
-	const onOpenInfo = () => {
-		const temp = !isOpen
-		setIsOpen(temp)
-	}
+
+	const [category, setCategory] = useState('')
+	const [district, setDistrict] = useState('')
+	const [contractor, setContractor] = useState('')
+	const [objectManagerFilter, setObjectManagerFilter] = useState(() => () => false)
+
 
 	return (
 		<div style={{position: 'relative'}}>
@@ -184,8 +178,9 @@ export const Map = () => {
 						placeholder='Все категории'
 						zIndex={600}
 						sx={{ width: '200px'}}
-						// value={ category }
-						// onChange={ () => setCategory(category) }
+						value={ category }
+						//@ts-ignore
+						onChange={ setCategory }
 						data={[
 							{ value: '', label: 'Все категории' },
 							{ value: 'Полная', label: 'Полные' },
@@ -197,8 +192,9 @@ export const Map = () => {
 						placeholder='Все районы'
 						sx={{width: '200px'}}
 						zIndex={600}
-						// value={ district }
-						// onChange={ () => setDistrict }
+						value={ district }
+						//@ts-ignore
+						onChange={ setDistrict }
 						data={[
 							{ value: '', label: 'Все районы' },
 							{ value: 'район 1', label: 'район 1' },
@@ -212,8 +208,9 @@ export const Map = () => {
 						placeholder='Все подрядчики'
 						sx={{width: '200px'}}
 						zIndex={600}
-						// value={ contractor }
-						// onChange={ () => setContractor }
+						value={ contractor }
+						//@ts-ignore
+						onChange={ setContractor }
 						data={[
 							{ value: '', label: 'Все подрядчики' },
 							{ value: 'ООО МАЛИНА', label: 'ООО МАЛИНА' },
