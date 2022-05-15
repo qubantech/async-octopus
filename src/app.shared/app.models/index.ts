@@ -33,7 +33,15 @@ type Event = {
 	id: number,
 	videoUrl: string,
 	startTime: string,
-	endTime: string
+	endTime: string,
+	snapshots: {
+		id: number,
+		time: string,
+		imageUrl: string,
+		createdAt: string,
+		updatedAt: string,
+		event: number
+	}
 }
 
 type Snapshot = {
