@@ -48,8 +48,8 @@ const TabEvents = (props:{events:any}) => {
 								<Timeline.Item key={ event.id }
 											   title={
 												   <Group align={'center'} position={ 'apart' }>
-													   <Text> { event.name } </Text>
-													   <ActionIcon onClick={ () => onBinEventClick(event.imageUrl) } className={classes.arrowButton} size={'lg'} variant={ 'filled' } sx={{backgroundColor: '#F6F6F6'}}>
+													   <Text> { event.snapshot.name } </Text>
+													   <ActionIcon onClick={ () => onBinEventClick(event.snapshot.imageUrl) } className={classes.arrowButton} size={'lg'} variant={ 'filled' } sx={{backgroundColor: '#F6F6F6'}}>
 														   <ArrowNarrowRight size={ 28 }  color={ '#75CC72' }/>
 													   </ActionIcon>
 												   </Group>
