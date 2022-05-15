@@ -155,7 +155,7 @@ export const ContractorsPage = () => {
 								</List>
 							</Grid.Col>
 							<Grid.Col span={6}>
-								<Text mb={10} weight={600}>Проблемные стороны</Text>
+								<Text mb={10} weight={600}>Приемущества</Text>
 								<List spacing={7}>
 									<List.Item
 										icon={
