@@ -9,6 +9,9 @@ import {ArrowNarrowRight, Check, Number3, Number4} from 'tabler-icons-react'
 import {appCamerasService} from '../../../app.shared/app.services/cameras.service'
 import {CommentHtml} from './comment'
 
+//@ts-ignore
+import binImage from '../assets/bin.jpeg'
+
 
 interface MapGarbageProps {
 	cameras: any,
@@ -40,7 +43,7 @@ const TabEvents = (props:{events:any}) => {
 					zIndex={ 800 }
 					size={ 'xl' }
 				>
-					<Image src={ binPhoto } />
+					<Image src={ binImage } />
 
 
 				</Modal>
