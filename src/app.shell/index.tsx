@@ -32,7 +32,7 @@ const DATA = [
 		link: '/map'
 	},
 	{
-		label: 'Написать отзыв',
+		label: 'Сообщить о правонарушении',
 		link: '/feedback'
 	},
 	{
