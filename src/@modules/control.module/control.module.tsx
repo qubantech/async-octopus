@@ -10,7 +10,7 @@ import {
 	Select,
 	Progress,
 	ColorSwatch,
-	ThemeIcon, List, Divider
+	ThemeIcon, List, Divider, TextInput, SegmentedControl
 } from '@mantine/core'
 import {
 	AnimatedAxis, // any of these can be non-animated equivalents
@@ -275,15 +275,21 @@ export const Control = () => {
 					</Paper>
 					<Paper my={15} shadow="xs" p="md">
 						<Title mx={10} order={3} mt={10}>Сформировать отчет</Title>
-						{/*<DateRangePicker*/}
-						{/*	my={10}*/}
-						{/*	mx={10}*/}
-						{/*	label="Выбрать период"*/}
-						{/*	placeholder="Pick dates range"*/}
-						{/*	value={[*/}
-						{/*		new Date(2022, 4, 1),*/}
-						{/*		new Date(2022, 	5, 5)]}*/}
-						{/*/>*/}
+						<TextInput
+							m={10}
+							placeholder="Your name"
+							label="Выбрать период"
+							value={'с 1 апреля 2022 до 1 мая 2022'}
+						/>
+						<SegmentedControl
+							data={[
+								{ label: 'Краткий', value: 'react' },
+								{ label: 'Полный', value: 'ng' },
+							]}
+							m={10}
+							fullWidth
+							defaultValue={'react'}
+						/>
 						<Group mx={10}>
 							<Button fullWidth>Сформировать .xls</Button>
 						</Group>
