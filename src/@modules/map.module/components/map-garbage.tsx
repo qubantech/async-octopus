@@ -13,7 +13,7 @@ import {useRecoilState} from 'recoil'
 import {AuthState} from '../../../app.shell/shell.state'
 
 //@ts-ignore
-import binImage from '../assets/bin.jpeg'
+import binImage from '../assets/bin2.jpeg'
 
 
 interface MapGarbageProps {
