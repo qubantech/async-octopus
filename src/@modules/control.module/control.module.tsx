@@ -1,5 +1,17 @@
 import React, {useEffect, useState} from 'react'
-import {Button, Container, Group, Title, Paper, Grid, Text, Select, Progress, ColorSwatch} from '@mantine/core'
+import {
+	Button,
+	Container,
+	Group,
+	Title,
+	Paper,
+	Grid,
+	Text,
+	Select,
+	Progress,
+	ColorSwatch,
+	ThemeIcon, List, Divider
+} from '@mantine/core'
 import {
 	AnimatedAxis, // any of these can be non-animated equivalents
 	AnimatedGrid,
@@ -12,6 +24,8 @@ import {StatTable} from './components/stat-table'
 import {appContractorService} from '../../app.shared/app.services/contractors.service'
 import {Contractors} from '../../app.shared/app.models'
 import {appCamerasService} from '../../app.shared/app.services/cameras.service'
+import {AlertCircle, CircleCheck, CircleDashed} from 'tabler-icons-react'
+import {DateRangePicker} from '@mantine/dates'
 
 const data1 = [
 	{x: '2022-04-16', y: 60},
@@ -183,12 +197,96 @@ export const Control = () => {
 			<Grid align={'stretch'} mb={15}>
 				<Grid.Col span={4}>
 					<Paper shadow="xs" p="md">
-						<Title mx={10} order={3} mt={10}>Рекомендации</Title>
-						<Text mx={10} my={20}>
-							абоба
-						</Text>
+						<Title mx={10} order={3} mt={10}>Статус</Title>
+						<List
+							mx={10}
+							my={20}
+							spacing="xs"
+							size="md"
+							center
+							icon={
+								<ThemeIcon color="teal" size={28} radius="xl">
+									<CircleCheck size={20} />
+								</ThemeIcon>
+							}
+						>
+							<List.Item
+								icon={
+									<ThemeIcon color="red" size={28} radius="xl">
+										<AlertCircle size={20} />
+									</ThemeIcon>
+								}
+							>1 локация требует особого внимания</List.Item>
+							<List.Item
+								icon={
+									<ThemeIcon color="orange" size={28} radius="xl">
+										<AlertCircle size={20} />
+									</ThemeIcon>
+								}>2 локации требуют внимания</List.Item>
+						</List>
+						<Divider/>
+						<List
+							mx={10}
+							mt={20}
+							mb={15}
+							spacing="xs"
+							size="md"
+							center
+							icon={
+								<ThemeIcon color="teal" size={28} radius="xl">
+									<CircleCheck size={20} />
+								</ThemeIcon>
+							}
+						>
+							<List.Item
+								icon={
+									<ThemeIcon color="orange" size={28} radius="xl">
+										<CircleDashed size={20} />
+									</ThemeIcon>
+								}
+							>2% уборок не в срок</List.Item>
+							<List.Item
+								icon={
+									<ThemeIcon color="orange" size={28} radius="xl">
+										<CircleDashed size={20} />
+									</ThemeIcon>
+								}>Достаточное количество дворников в городе</List.Item>
+							<List.Item
+								icon={
+									<ThemeIcon color="green" size={28} radius="xl">
+										<CircleDashed size={20} />
+									</ThemeIcon>
+								}
+							>
+								6 жалоб за последний месяц
+							</List.Item>
+						</List>
+						<Divider my={10} label={'Рекомендация'}/>
+						<List mx={10} mb={10}>
+							<List.Item>
+								Подробное изучение всех жалоб
+							</List.Item>
+							<List.Item>
+								Небольшое расширение штата в рамках долгосрочного плана
+							</List.Item>
+						</List>
 						<Group position={'right'}>
-							<Button variant={'filled'}>Подробнее</Button>
+							<Button fullWidth>Подробнее</Button>
+						</Group>
+					</Paper>
+					<Paper my={15} shadow="xs" p="md">
+						<Title mx={10} order={3} mt={10}>Сформировать отчет</Title>
+						<DateRangePicker
+							my={10}
+							mx={10}
+							label="Выбрать период"
+							placeholder="Pick dates range"
+							value={[
+								new Date(2022, 4, 1),
+								new Date(2022, 	5, 5)]}
+						/>
+						<Group mx={10}>
+							<Button fullWidth>Сформировать .xls</Button>
 						</Group>
 					</Paper>
 				</Grid.Col>

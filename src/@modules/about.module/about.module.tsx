@@ -12,6 +12,7 @@ import image7 from './images/7.jpg'
 import {CamCard} from './cam.card'
 import {PrevIcon} from '@mantine/core/lib/components/Pagination/icons'
 import {ArrowLeft, ArrowRight, MapPin} from 'tabler-icons-react'
+import {CamModal} from './camModal'
 
 
 export const About = () => {
@@ -57,18 +58,7 @@ export const About = () => {
 	return <>
 		<HeroTitle/>
 		<Container>
-			<Modal title={'Камера онлайн трансляция'} size={'xl'} opened={isOpen} onClose={() => setOpen(false)}>
-				<iframe width={'100%'} height={'600'} src="https://rtsp.me/embed/GsrAG9bN/" frameBorder="0"
-					allowFullScreen></iframe>
-				<Group mt={20} position={'apart'}>
-					<Button variant={'default'}> <Group align={'start'}><ArrowLeft size={22}/>
-						<Text>Предыдущая камера</Text></Group></Button>
-					<Button><Group align={'start'}> <MapPin size={20}/>
-						<Text>Перейти к карте</Text> </Group></Button>
-					<Button variant={'default'}><Group align={'start'}>
-						<Text>Следующая камера</Text><ArrowRight size={22}/></Group></Button>
-				</Group>
-			</Modal>
+			<CamModal isOpen={isOpen} setOpen={setOpen}/>
 			<Title order={2} my={30}>Камеры города </Title>
 			<Grid mb={30}>
 				{cards.map((el, index) => {

@@ -2,9 +2,23 @@ import React, {useEffect, useState} from 'react'
 import {appContractorService} from '../../app.shared/app.services/contractors.service'
 import {Contractors} from '../../app.shared/app.models'
 import {useParams} from 'react-router-dom'
-import {Breadcrumbs, Container, Group, Stack, Text, Grid, Title, Anchor, Paper, Avatar, ThemeIcon} from '@mantine/core'
+import {
+	Breadcrumbs,
+	Container,
+	Group,
+	Stack,
+	Text,
+	Grid,
+	Title,
+	Anchor,
+	Paper,
+	Avatar,
+	ThemeIcon,
+	List, Button
+} from '@mantine/core'
 import {CalendarTime, Mail, PhoneCalling, PhoneCheck} from 'tabler-icons-react'
 import {StatsSegments} from './segmentstat.module'
+import {DateRangePicker} from '@mantine/dates'
 
 export const ContractorsPage = () => {
 	const items = [
@@ -116,9 +130,34 @@ export const ContractorsPage = () => {
 					}]
 					}/>
 			</Paper>
-			<Paper shadow="xs" p="md">
-				advice
-			</Paper>
+			<Grid>
+				<Grid.Col span={8}>
+					<Paper p={30} my={10} shadow="xs">
+						<Title mb={15} order={3}>Краткая характеристика</Title>
+						<List>
+							<List.Item>Добросовестный поставщик</List.Item>
+							<List.Item>Давно работает на администрацию</List.Item>
+						</List>
+					</Paper>
+				</Grid.Col>
+				<Grid.Col span={4}>
+					<Paper my={10} shadow="xs" p="md">
+						<Title mx={10} order={3} mt={10}>Сформировать отчет</Title>
+						<DateRangePicker
+							my={10}
+							mx={10}
+							label="Выбрать период"
+							placeholder="Pick dates range"
+							value={[
+								new Date(2022, 4, 1),
+								new Date(2022, 	5, 5)]}
+						/>
+						<Group mx={10}>
+							<Button fullWidth>Сформировать .xls</Button>
+						</Group>
+					</Paper>
+				</Grid.Col>
+			</Grid>
 		</Container>
 	)
 }

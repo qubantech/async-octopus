@@ -14,7 +14,7 @@ export const Recommend = () => {
 					<Paper style={{height: '435px'}} shadow="xs" p="md" py={15}>
 						<Grid my={10}>
 							<Grid.Col span={6}>
-								<Image src={image1}/>
+								<Image height={160} src={image1}/>
 								<Text size={'sm'} color={'gray'} mt={10}>Камера 2</Text>
 							</Grid.Col>
 							<Grid.Col span={6}>
@@ -73,7 +73,7 @@ export const Recommend = () => {
 					<Paper style={{height: '435px'}} shadow="xs" p="md" py={15}>
 						<Grid my={10}>
 							<Grid.Col span={6}>
-								<Image src={image2}/>
+								<Image height={160} src={image2}/>
 								<Text size={'sm'} color={'gray'} mt={10}>Камера 3</Text>
 							</Grid.Col>
 							<Grid.Col span={6}>
@@ -122,7 +122,7 @@ export const Recommend = () => {
 					<Paper style={{height: '435px'}} shadow="xs" p="md" py={15}>
 						<Grid my={10}>
 							<Grid.Col span={6}>
-								<Image src={image3}/>
+								<Image height={160} src={image3}/>
 								<Text size={'sm'} color={'gray'} mt={10}>Камера 7</Text>
 							</Grid.Col>
 							<Grid.Col span={6}>

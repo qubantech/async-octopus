@@ -127,6 +127,9 @@ export const Map = () => {
 									const districtID = getRandomInt(13)
 									const contractorID = getRandomInt(9)
 
+									console.log('5555555: ', item.events )
+
+
 									const tempElement = {
 										'type': 'Feature',
 										'id': item.id,
