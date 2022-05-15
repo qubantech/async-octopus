@@ -196,7 +196,7 @@ export const MapGarbage: FC<MapGarbageProps> =
 		useEffect(() => {
 			if (selectedPoint){
 				const tempEvents: any[] = []
-
+				console.log('11111: ', selectedPoint.properties.events)
 				selectedPoint.properties.events.map((event:any) => {
 					appCamerasService.getEvents(selectedPoint.id)
 						.then((respEvent) => {
