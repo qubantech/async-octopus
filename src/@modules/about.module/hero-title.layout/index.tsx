@@ -115,7 +115,7 @@ export function HeroTitle() {
 						color={'dark'}
 						className={cx(classes.control, classes.githubControl)}
 					>
-						Написать жалобу
+						Написать отзыв
 					</Button>
 				</Group>
 			</Container>

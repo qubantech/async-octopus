@@ -11,6 +11,7 @@ import {curveNatural} from '@visx/curve'
 import {StatTable} from './components/stat-table'
 import {appContractorService} from '../../app.shared/app.services/contractors.service'
 import {Contractors} from '../../app.shared/app.models'
+import {appCamerasService} from '../../app.shared/app.services/cameras.service'
 
 const data1 = [
 	{x: '2022-04-16', y: 60},
@@ -77,6 +78,10 @@ export const Control = () => {
 	const [contactors, setContactors] = useState<ContractorsData[]>([InitStateContractorsData])
 
 	useEffect(() => {
+		appCamerasService.getZones()
+			.then((resp)=> {
+				console.log(resp)
+			})
 		appContractorService.getContractors()
 			.then(resp => {
 				console.log(resp)

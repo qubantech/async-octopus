@@ -8,7 +8,29 @@ type Contractors = {
 	workEndTime: string
 }
 
+type Camera = {
+	id: number,
+	address: string,
+	latitude: string,
+	longitude: string,
+	events: {
+		id: number,
+		videoUrl: string,
+		startTime: string,
+		endTime: string,
+		camera: 0
+	}[]
+}
+
+type Zone = {
+	id: number,
+	nameToken: string,
+	description: string,
+	gps: number[][]
+}
 
 export type {
-	Contractors
+	Contractors,
+	Camera,
+	Zone
 }
