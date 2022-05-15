@@ -3,7 +3,6 @@ import {MapGarbage} from './components/map-garbage'
 import {Autocomplete, Container, Group, Select } from '@mantine/core'
 import placemark from './assets/Placemark.svg'
 import { MapPin, Search } from 'tabler-icons-react'
-import { useMapStyles } from './components/map.style'
 
 import  initialDistricts  from './assets/anapa-districts.json'
 
@@ -35,9 +34,10 @@ const initCameras = {
 			'properties': {
 				'hintContent': 'Камера 1',
 				'title': 'Камера 1',
-				'category': 'Полная',
+				'category': 'empty',
 				'district': 'Район 1',
-				'contractor': 'ООО МАЛИНА'
+				'contractor': 'ООО "Чистый город"',
+				'address': 'Анапа, Краснодарский край, Россия'
 			},
 			'options': {
 				'iconLayout': 'default#image',
@@ -47,7 +47,7 @@ const initCameras = {
 		},
 		{
 			'type': 'Feature',
-			'id': 0,
+			'id': 1,
 			'geometry': {
 				'type': 'Point',
 				'coordinates': [
@@ -58,9 +58,10 @@ const initCameras = {
 			'properties': {
 				'hintContent': 'Камера 1',
 				'title': 'Камера 1',
-				'category': 'Полная',
-				'district': 'Район 1',
-				'contractor': 'ООО МАЛИНА'
+				'category': 'full',
+				'district': 'Район 2',
+				'contractor': 'ООО "МАЛИНА"',
+				'address': 'Анапа, Краснодарский край, Россия'
 
 			},
 			'options': {
@@ -74,18 +75,11 @@ const initCameras = {
 
 
 export const Map = () => {
-	const { classes } = useMapStyles()
 
 	const [mapState, setMapState] = useState({center: [44.8857, 37.31992], zoom: 13})
 	const [camera, setCamera] = useState('')
-	const [isOpen, setIsOpen] = useState(false)
 	const [districts, setDistricts] = useState(initialDistricts)
-
 	const [cameras, setCameras] = useState(initCameras)
-
-	const [category, setCategory] = useState('')
-	const [district, setDistrict] = useState('')
-	const [contractor, setContractor] = useState('')
 
 	// useEffect(() => {
 	// 	const tempCameras = {
@@ -138,9 +132,43 @@ export const Map = () => {
 		}
 	}
 
-	const onOpenInfo = () => {
-		const temp = !isOpen
-		setIsOpen(temp)
+
+	const [category, setCategory] = useState('')
+	const [district, setDistrict] = useState('')
+	const [contractor, setContractor] = useState('')
+	const [objectManagerFilter, setObjectManagerFilter] = useState(() => (object:any) => true)
+
+	const onCategoryChange = (category: string) => {
+		setObjectManagerFilter( () => (object:any) => {
+			const isCategory = category === '' || object.properties.category === category
+			const isDistrict = district === '' || object.properties.district === district
+			const isContractor = contractor === '' || object.properties.contractor === contractor
+			return isCategory && isDistrict && isContractor
+		})
+
+		setCategory(category)
+	}
+
+	const onDistrictChange = (district: string) => {
+		setObjectManagerFilter( () => (object:any) => {
+			const isCategory = category === '' || object.properties.category === category
+			const isDistrict = district === '' || object.properties.district === district
+			const isContractor = contractor === '' || object.properties.contractor === contractor
+			return isCategory && isDistrict && isContractor
+		})
+
+		setDistrict(district)
+	}
+
+	const onContractorChange = (contractor: string) => {
+		setObjectManagerFilter( () => (object:any) => {
+			const isCategory = category === '' || object.properties.category === category
+			const isDistrict = district === '' || object.properties.district === district
+			const isContractor = contractor === '' || object.properties.contractor === contractor
+			return isCategory && isDistrict && isContractor
+		})
+
+		setContractor(contractor)
 	}
 
 	return (
@@ -184,12 +212,13 @@ export const Map = () => {
 						placeholder='Все категории'
 						zIndex={600}
 						sx={{ width: '200px'}}
-						// value={ category }
-						// onChange={ () => setCategory(category) }
+						value={ category }
+						//@ts-ignore
+						onChange={ onCategoryChange }
 						data={[
 							{ value: '', label: 'Все категории' },
-							{ value: 'Полная', label: 'Полные' },
-							{ value: 'Пустые', label: 'Пустые' },
+							{ value: 'full', label: 'Полные' },
+							{ value: 'empty', label: 'Пустые' },
 						]}
 					/>
 					<Select
@@ -197,14 +226,15 @@ export const Map = () => {
 						placeholder='Все районы'
 						sx={{width: '200px'}}
 						zIndex={600}
-						// value={ district }
-						// onChange={ () => setDistrict }
+						value={ district }
+						//@ts-ignore
+						onChange={ onDistrictChange }
 						data={[
 							{ value: '', label: 'Все районы' },
-							{ value: 'район 1', label: 'район 1' },
-							{ value: 'район 2', label: 'район 2' },
-							{ value: 'район 3', label: 'район 3' },
-							{ value: 'район 4', label: 'район 4' },
+							{ value: 'Район 1', label: 'Район 1' },
+							{ value: 'Район 2', label: 'Район 2' },
+							{ value: 'Район 3', label: 'Район 3' },
+							{ value: 'Район 4', label: 'Район 4' },
 						]}
 					/>
 					<Select
@@ -212,19 +242,25 @@ export const Map = () => {
 						placeholder='Все подрядчики'
 						sx={{width: '200px'}}
 						zIndex={600}
-						// value={ contractor }
-						// onChange={ () => setContractor }
+						value={ contractor }
+						//@ts-ignore
+						onChange={ onContractorChange }
 						data={[
 							{ value: '', label: 'Все подрядчики' },
-							{ value: 'ООО МАЛИНА', label: 'ООО МАЛИНА' },
-							{ value: 'ООО ВИШНЯ', label: 'ООО ВИШНЯ' },
-							{ value: 'ООО ЯГОДА', label: 'ООО ЯГОДА' },
-							{ value: 'ООО ЯБЛОКО', label: 'ООО ЯБЛОКО' },
+							{ value: 'ООО "Чистый город"', label: 'ООО "Чистый город"' },
+							{ value: 'ООО "ВИШНЯ"', label: 'ООО "ВИШНЯ"' },
+							{ value: 'ООО "ЯГОДА"', label: 'ООО "ЯГОДА"' },
+							{ value: 'ООО "ЯБЛОКО"', label: 'ООО "ЯБЛОКО"' },
 						]}
 					/>
 				</Group>
 			</Container>
-			<MapGarbage state={ mapState } cameras={ cameras } districts={ districts }/>
+			<MapGarbage
+				state={ mapState }
+				cameras={ cameras }
+				districts={ districts }
+				objectManagerFilter={ objectManagerFilter }
+			/>
 		</div>
 	)
 }

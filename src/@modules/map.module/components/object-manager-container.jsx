@@ -2,7 +2,7 @@ import React from 'react'
 import { ObjectManager } from 'react-yandex-maps'
 
 // eslint-disable-next-line react/prop-types
-const ObjectManagerContainer = ({ bins, onPlacemarkClick }) => {
+const ObjectManagerContainer = ({ bins, onPlacemarkClick, objectManagerFilter }) => {
 	return (
 		<>
 			<ObjectManager
@@ -14,6 +14,7 @@ const ObjectManagerContainer = ({ bins, onPlacemarkClick }) => {
 					preset: 'islands#greenClusterIcons',
 				}}
 				features={ bins }
+				filter={ objectManagerFilter }
 				instanceRef={ref =>
 
 					ref?.objects.events.add('click', (e) => {
