@@ -39,7 +39,7 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-export const CamCard = (props:{img:any, subtitle: string, title: string}) => {
+export const CamCard = (props:{img:any, subtitle: string, title: string, setOpen: (b: boolean) => void}) => {
 
 	const { classes } = useStyles()
 
@@ -61,7 +61,7 @@ export const CamCard = (props:{img:any, subtitle: string, title: string}) => {
 				</Title>
 			</div>
 			<Group position={'right'} align={'center'}>
-				<Button fullWidth variant="white" color="dark">
+				<Button onClick={() => props.setOpen(true)} fullWidth variant="white" color="dark">
 					<ColorSwatch mr={15} size={12} className={'blink_me'} color={'red'}/>
 					Просмотреть прямой эфир
 				</Button>
