@@ -7,6 +7,7 @@ import { useMapStyle } from '../map.style'
 import  cameraImage  from '../assets/camera.svg'
 import {ArrowNarrowRight, Check, Number3, Number4} from 'tabler-icons-react'
 import {appCamerasService} from '../../../app.shared/app.services/cameras.service'
+import {CommentHtml} from './comment'
 
 
 interface MapGarbageProps {
@@ -201,7 +202,7 @@ export const MapGarbage: FC<MapGarbageProps> =
 		useEffect(() => {
 			if (selectedPoint){
 				const tempEvents: any[] = []
-
+				console.log('11111: ', selectedPoint.properties.events)
 				selectedPoint.properties.events.map((event:any) => {
 					appCamerasService.getEvents(selectedPoint.id)
 						.then((respEvent) => {
@@ -294,7 +295,13 @@ export const MapGarbage: FC<MapGarbageProps> =
 						<Tabs.Tab label="События" sx={{fontWeight: 600}}>
 							<TabEvents events={ events }/>
 						</Tabs.Tab>
-						<Tabs.Tab label="Отзывы" sx={{fontWeight: 600}}>Settings tab content</Tabs.Tab>
+						<Tabs.Tab label="Отзывы" sx={{fontWeight: 600}}>
+							<CommentHtml postedAt={'3 дня назад'}
+										 body={'Живу рядом с этой мусоркой и вечно на выходных она заполнена мусором. Прошу разобраться в этой ситуации.'}
+										 author={'Иван Иванов'}
+										 answer={'По результатам Вашего обращения проведена проверка и изменено расписание коммунальных служб. Спасибо за обращение!'}
+							/>
+						</Tabs.Tab>
 					</Tabs>
 
 				</Drawer>

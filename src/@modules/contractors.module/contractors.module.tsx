@@ -18,7 +18,6 @@ import {
 } from '@mantine/core'
 import {CalendarTime, Mail, PhoneCalling, PhoneCheck} from 'tabler-icons-react'
 import {StatsSegments} from './segmentstat.module'
-import {DateRangePicker} from '@mantine/dates'
 
 export const ContractorsPage = () => {
 	const items = [
@@ -143,15 +142,15 @@ export const ContractorsPage = () => {
 				<Grid.Col span={4}>
 					<Paper my={10} shadow="xs" p="md">
 						<Title mx={10} order={3} mt={10}>Сформировать отчет</Title>
-						<DateRangePicker
-							my={10}
-							mx={10}
-							label="Выбрать период"
-							placeholder="Pick dates range"
-							value={[
-								new Date(2022, 4, 1),
-								new Date(2022, 	5, 5)]}
-						/>
+						{/*<DateRangePicker*/}
+						{/*	my={10}*/}
+						{/*	mx={10}*/}
+						{/*	label="Выбрать период"*/}
+						{/*	placeholder="Pick dates range"*/}
+						{/*	value={[*/}
+						{/*		new Date(2022, 4, 1),*/}
+						{/*		new Date(2022, 	5, 5)]}*/}
+						{/*/>*/}
 						<Group mx={10}>
 							<Button fullWidth>Сформировать .xls</Button>
 						</Group>
