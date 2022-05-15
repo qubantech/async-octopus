@@ -8,6 +8,9 @@ import  cameraImage  from '../assets/camera.svg'
 import {ArrowNarrowRight, Check, Number3, Number4} from 'tabler-icons-react'
 import {appCamerasService} from '../../../app.shared/app.services/cameras.service'
 import {CommentHtml} from './comment'
+import {CamModal} from '../../about.module/camModal'
+import {useRecoilState} from 'recoil'
+import {AuthState} from '../../../app.shell/shell.state'
 
 
 interface MapGarbageProps {
@@ -148,6 +151,7 @@ const TabEvents = (props:{events:any}) => {
 
 const TabOverview = () => {
 	const { classes } = useMapStyle()
+	const [isOpen, setOpen] = useState(false)
 
 	return (
 		<>
@@ -158,8 +162,8 @@ const TabOverview = () => {
 				alt='camera'
 				sx={{marginTop: '20px'}}
 			/>
-
-			<Button className={ classes.button } sx={{width: '100%', color: '#5EB059', backgroundColor: '#EEFAEF', marginTop: '10px'}}>Посмотреть камеру</Button>
+			<CamModal isOpen={isOpen} setOpen={setOpen}/>
+			<Button onClick={() => setOpen(true)} className={ classes.button } sx={{width: '100%', color: '#5EB059', backgroundColor: '#EEFAEF', marginTop: '10px'}}>Посмотреть камеру</Button>
 			<Divider size={ 'sm' } sx={{marginTop: '20px'}}/>
 			<Group direction={ 'row' } align={ 'center' } position={ 'apart' } sx={{
 				border: '1px solid #EAEBEF',
@@ -192,6 +196,7 @@ export const MapGarbage: FC<MapGarbageProps> =
 		const [pointDrawerState, setPointDrawerState] = useState<boolean>(false)
 
 		const [events, setEvents] = useState([{id: 0, snapshots:{id: 0, name: '', imageUrl: '', time: ''}}])
+		const [ auth, setAuth] = useRecoilState(AuthState)
 
 		const onPlacemarkClick = (point: any) => {
 			setSelectedPoint(point)
@@ -296,11 +301,17 @@ export const MapGarbage: FC<MapGarbageProps> =
 							<TabEvents events={ events }/>
 						</Tabs.Tab>
 						<Tabs.Tab label="Отзывы" sx={{fontWeight: 600}}>
+							{auth &&
+								<CommentHtml postedAt={'3 дня назад'}
+											 body={'Живу рядом с этой мусоркой и вечно на выходных она заполнена мусором. Прошу разобраться в этой ситуации.'}
+											 author={'Иван Иванов'}
+								/>
+							||
 							<CommentHtml postedAt={'3 дня назад'}
 										 body={'Живу рядом с этой мусоркой и вечно на выходных она заполнена мусором. Прошу разобраться в этой ситуации.'}
 										 author={'Иван Иванов'}
 										 answer={'По результатам Вашего обращения проведена проверка и изменено расписание коммунальных служб. Спасибо за обращение!'}
-							/>
+							/>}
 						</Tabs.Tab>
 					</Tabs>
 

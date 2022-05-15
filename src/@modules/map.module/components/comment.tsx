@@ -1,5 +1,5 @@
 import React from 'react'
-import {createStyles, Text, Avatar, Group, TypographyStylesProvider, Paper} from '@mantine/core'
+import {createStyles, Text, Avatar, Group, TypographyStylesProvider, Paper, Textarea, Button} from '@mantine/core'
 
 const useStyles = createStyles((theme) => ({
 	comment: {
@@ -53,6 +53,24 @@ export function CommentHtml({postedAt, body, author, answer}: CommentHtmlProps) 
 						<div className={classes.content} dangerouslySetInnerHTML={{__html: answer}}/>
 					</TypographyStylesProvider>
 				</Paper>
+				|| <Paper ml={50} radius={'md'} p={15} mt={10} mb={20} style={{backgroundColor: '#D3F9D8'}} withBorder>
+					<Group>
+						<Avatar alt={author} radius="xl">A</Avatar>
+						<div>
+							<Text weight={600} size="sm">Администрация</Text>
+						</div>
+					</Group>
+					<Text>Отписать ответ</Text>
+					<Textarea
+						my={10}
+						minRows={5}
+					/>
+					<Group grow>
+						<Button color={'red'}>Удалить</Button>
+						<Button>Отправить</Button>
+					</Group>
+				</Paper>
+
 			}
 		</Paper>
 	)

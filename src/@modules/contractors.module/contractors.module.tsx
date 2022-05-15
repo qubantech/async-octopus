@@ -14,9 +14,9 @@ import {
 	Paper,
 	Avatar,
 	ThemeIcon,
-	List, Button
+	List, Button, TextInput, SegmentedControl
 } from '@mantine/core'
-import {CalendarTime, Mail, PhoneCalling, PhoneCheck} from 'tabler-icons-react'
+import {CalendarTime, CircleCheck, CircleDashed, Mail, PhoneCalling, PhoneCheck} from 'tabler-icons-react'
 import {StatsSegments} from './segmentstat.module'
 
 export const ContractorsPage = () => {
@@ -77,7 +77,8 @@ export const ContractorsPage = () => {
 								<PhoneCalling size={30}/>
 							</ThemeIcon>
 							<Stack spacing={1}>
-								<Text size={'sm'} align={'center'} color={'gray'}>Телефон для официальных обращений:</Text>
+								<Text size={'sm'} align={'center'} color={'gray'}>Телефон для официальных
+									обращений:</Text>
 								<Text align={'center'}>{contractors.officialPhone}</Text>
 							</Stack>
 						</Stack>
@@ -96,7 +97,7 @@ export const ContractorsPage = () => {
 					<Grid.Col span={3}>
 						<Stack align={'center'} spacing={1}>
 							<ThemeIcon size={50} my={10} variant="light" color="green">
-								<CalendarTime />
+								<CalendarTime/>
 							</ThemeIcon>
 							<Stack spacing={1}>
 								<Text size={'sm'} align={'center'} color={'gray'}>Время работы:</Text>
@@ -133,24 +134,94 @@ export const ContractorsPage = () => {
 				<Grid.Col span={8}>
 					<Paper p={30} my={10} shadow="xs">
 						<Title mb={15} order={3}>Краткая характеристика</Title>
-						<List>
-							<List.Item>Добросовестный поставщик</List.Item>
-							<List.Item>Давно работает на администрацию</List.Item>
-						</List>
+						<Grid>
+							<Grid.Col span={6}>
+								<Text mb={10} weight={600}>Проблемные стороны</Text>
+								<List spacing={7}>
+									<List.Item
+										icon={
+											<ThemeIcon color="orange" size={28} radius="xl">
+												<CircleDashed size={20}/>
+											</ThemeIcon>
+										}
+									>4% уборок не в срок</List.Item>
+									<List.Item
+										icon={
+											<ThemeIcon color="orange" size={28} radius="xl">
+												<CircleDashed size={20}/>
+											</ThemeIcon>
+										}
+									>5 негативных отзыва за прошлый год, направленные на поставщика</List.Item>
+								</List>
+							</Grid.Col>
+							<Grid.Col span={6}>
+								<Text mb={10} weight={600}>Проблемные стороны</Text>
+								<List spacing={7}>
+									<List.Item
+										icon={
+											<ThemeIcon color="brand" size={28} radius="xl">
+												<CircleDashed size={20}/>
+											</ThemeIcon>
+										}>Сотрудничество более 5 лет</List.Item>
+									<List.Item
+										icon={
+											<ThemeIcon color="green" size={28} radius="xl">
+												<CircleDashed size={20}/>
+											</ThemeIcon>
+										}
+									>
+										60% выполнено с опережением графика
+									</List.Item>
+									<List.Item
+										icon={
+											<ThemeIcon color="green" size={28} radius="xl">
+												<CircleDashed size={20}/>
+											</ThemeIcon>
+										}
+									>
+										Высокая эффективность дворников - выше 70% других поставщиков
+									</List.Item>
+									<List.Item
+										icon={
+											<ThemeIcon color="green" size={28} radius="xl">
+												<CircleDashed size={20}/>
+											</ThemeIcon>
+										}
+									>
+										Не зафиксировано жалоб на условия труда
+									</List.Item>
+									<List.Item
+										icon={
+											<ThemeIcon color="green" size={28} radius="xl">
+												<CircleDashed size={20}/>
+											</ThemeIcon>
+										}
+									>
+										Отчетность за прошлый год корректна
+									</List.Item>
+								</List>
+							</Grid.Col>
+						</Grid>
 					</Paper>
 				</Grid.Col>
 				<Grid.Col span={4}>
 					<Paper my={10} shadow="xs" p="md">
 						<Title mx={10} order={3} mt={10}>Сформировать отчет</Title>
-						{/*<DateRangePicker*/}
-						{/*	my={10}*/}
-						{/*	mx={10}*/}
-						{/*	label="Выбрать период"*/}
-						{/*	placeholder="Pick dates range"*/}
-						{/*	value={[*/}
-						{/*		new Date(2022, 4, 1),*/}
-						{/*		new Date(2022, 	5, 5)]}*/}
-						{/*/>*/}
+						<TextInput
+							m={10}
+							placeholder="Your name"
+							label="Выбрать период"
+							value={'с 1 апреля 2022 до 1 мая 2022'}
+						/>
+						<SegmentedControl
+							data={[
+								{label: 'Краткий', value: 'react'},
+								{label: 'Полный', value: 'ng'},
+							]}
+							m={10}
+							fullWidth
+							defaultValue={'react'}
+						/>
 						<Group mx={10}>
 							<Button fullWidth>Сформировать .xls</Button>
 						</Group>
