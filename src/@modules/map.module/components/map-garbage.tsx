@@ -178,11 +178,12 @@ export const MapGarbage: FC<MapGarbageProps> =
 						objectManagerFilter={ objectManagerFilter }
 					/>
 					{
+						districts !== undefined &&
 						districts.map((district:any) => {
 							return (
 								<Polygon
 									key={district.id}
-									geometry={[district.coordinates]}
+									geometry={[district.gps]}
 									options={{
 										fillColor: '#EEFAEF',
 										strokeColor: '#5EB059',
@@ -190,7 +191,7 @@ export const MapGarbage: FC<MapGarbageProps> =
 										strokeWidth: 2,
 									}}
 									properties={{
-										hintContent: district.id
+										hintContent: district.nameToken
 									}}
 									modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
 								/>
@@ -218,7 +219,7 @@ export const MapGarbage: FC<MapGarbageProps> =
 							marginTop: '20px',
 						}}
 					>
-						{ selectedPoint.properties.contractor }
+						{ selectedPoint.properties.contractor.title }
 					</Text>
 				</Group>
 				<Tabs sx={{marginTop: '40px'}}>
