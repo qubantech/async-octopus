@@ -78,7 +78,7 @@ export const Control = () => {
 	const [contactors, setContactors] = useState<ContractorsData[]>([InitStateContractorsData])
 
 	useEffect(() => {
-		appCamerasService.getZones()
+		appCamerasService.getSnapshot(12)
 			.then((resp)=> {
 				console.log(resp)
 			})

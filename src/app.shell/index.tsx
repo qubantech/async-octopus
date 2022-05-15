@@ -7,9 +7,9 @@ import {
 import { NavbarState } from './shell.state'
 import {
 	BrandInstagram,
-	BrandTwitter,
+	BrandTwitter, BrandVk,
 	BrandYoutube, Camera,
-	FileAnalytics,
+	FileAnalytics, Mailbox,
 	Plus,
 	Receipt2
 } from 'tabler-icons-react'
@@ -64,9 +64,8 @@ export const Shell: FC<PropsWithChildren<any>> = ({ children }) => {
 		data={DATA}
 		copyrightText='© 2022 quban.tech. No rights reserved.'
 		socialMedia={[
-			{ link: 'twitter.com', icon: BrandTwitter },
-			{ link: 'youtube.com', icon: BrandYoutube },
-			{ link: 'instagram.com', icon: BrandInstagram },
+			{ link: 'vk.com', icon: BrandVk },
+			{link: 'sas', icon: Mailbox}
 		]}
 	/>
 

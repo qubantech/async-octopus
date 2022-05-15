@@ -29,8 +29,38 @@ type Zone = {
 	gps: number[][]
 }
 
+type Event = {
+	id: number,
+	videoUrl: string,
+	startTime: string,
+	endTime: string
+}
+
+type Snapshot = {
+	id: number,
+	time: string,
+	imageUrl: string,
+	createdAt: string,
+	updatedAt: string,
+	event: number,
+	objectClasses: {
+		id: number,
+		nameToken: string
+		description: string
+		createdAt: string,
+		updatedAt: string,
+		SnapshotObjectClasses: {
+			id: number,
+			snapshotID: number,
+			classId: number
+		}[]
+	}[]
+}
+
 export type {
 	Contractors,
 	Camera,
-	Zone
+	Zone,
+	Event,
+	Snapshot
 }

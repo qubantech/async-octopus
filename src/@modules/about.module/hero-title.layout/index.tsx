@@ -88,16 +88,11 @@ export function HeroTitle() {
 		<div className={classes.wrapper}>
 			<Container className={classes.inner}>
 				<h1 className={classes.title}>
-					Description {' '}
-					<Text component="span" variant="gradient" gradient={{ from: 'blue', to: 'cyan' }} inherit>
-						description
-					</Text>{' '}
+					Вместе мы сделаем город чище
 				</h1>
 
 				<Text className={classes.description} color="dimmed">
-                    Description description <br/>
-					description description description <br/>
-					description <br/>
+					Оставьте отзыв - внесите свой вклад в чистое будущее
 				</Text>
 
 				<Group className={classes.controls}>
