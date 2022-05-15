@@ -41,7 +41,7 @@ type Event = {
 		createdAt: string,
 		updatedAt: string,
 		event: number
-	}
+	}[]
 }
 
 type Snapshot = {

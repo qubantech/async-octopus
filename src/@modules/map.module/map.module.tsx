@@ -153,6 +153,7 @@ export const Map = () => {
 												'id':  contractorID.toString(),
 												'title': contr[contractorID].label
 											},
+											'events': item.events,
 											'hintContent': item.address,
 										},
 										'options': {

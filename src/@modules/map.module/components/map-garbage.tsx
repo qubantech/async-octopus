@@ -1,11 +1,12 @@
 import {ActionIcon, Button, Divider, Drawer, Group, Image, Modal, Select, Space, Tabs, Text, Timeline} from '@mantine/core'
-import React, {FC, useState} from 'react'
+import React, {FC, useEffect, useState} from 'react'
 import {YMaps, Map, Polygon} from 'react-yandex-maps'
 import ObjectManagerContainer from './object-manager-container'
 import { useMapStyle } from '../map.style'
 
 import  cameraImage  from '../assets/camera.svg'
 import {ArrowNarrowRight, Check, Number3, Number4} from 'tabler-icons-react'
+import {appCamerasService} from '../../../app.shared/app.services/cameras.service'
 
 
 interface MapGarbageProps {
@@ -15,7 +16,9 @@ interface MapGarbageProps {
 	objectManagerFilter: any,
 }
 
-const TabEvents = () => {
+const TabEvents = (props:{events:any}) => {
+	console.log('evetn: ', props.events)
+
 	const [category, setCategory] = useState('')
 	const { classes } = useMapStyle()
 	const [isBinOpen, setIsBinOpen] = useState(false)
@@ -38,44 +41,65 @@ const TabEvents = () => {
 					<Text>{ binPhoto }</Text>
 				</Modal>
 				<Timeline active={2} bulletSize={24} lineWidth={4} sx={{marginTop: '20px',}}>
-					<Timeline.Item bullet={<Check size={18}/>}
-								   title={
-									   <Group align={'center'} position={ 'apart' }>
-										   <Text>Урна переполнена</Text>
-										   <ActionIcon onClick={ () => onBinEventClick('Фоточка мусорки') } className={classes.arrowButton} size={'lg'} variant={ 'filled' } sx={{backgroundColor: '#F6F6F6'}}>
-											   <ArrowNarrowRight size={ 28 }  color={ '#75CC72' }/>
-										   </ActionIcon>
-									   </Group>
-								   }
-					>
-						<Space h={ 50 } />
-					</Timeline.Item>
 
-					<Timeline.Item bullet={<Check size={18} />} title={
-						<Group align={'center'} position={ 'apart' }>
-							<Text>Урна пуста</Text>
-							<ActionIcon  className={classes.arrowButton}  size={'lg'} variant={ 'filled' } sx={{backgroundColor: '#F6F6F6'}}>
-								<ArrowNarrowRight size={ 28 }  color={ '#75CC72' }/>
-							</ActionIcon>
-						</Group>
-					}>
-						<Space h={ 50 } />
-					</Timeline.Item>
+					{
+						props.events.map((event:any) => {
+							return (
+								<Timeline.Item key={ event.id }
+											   title={
+												   <Group align={'center'} position={ 'apart' }>
+													   <Text> { event.name } </Text>
+													   <ActionIcon onClick={ () => onBinEventClick(event.imageUrl) } className={classes.arrowButton} size={'lg'} variant={ 'filled' } sx={{backgroundColor: '#F6F6F6'}}>
+														   <ArrowNarrowRight size={ 28 }  color={ '#75CC72' }/>
+													   </ActionIcon>
+												   </Group>
+											   }
+								>
+									<Space h={ 50 } />
+								</Timeline.Item>
+							)
+						})
+					}
 
-					<Timeline.Item bullet={<Number3 size={12} />} lineVariant="dashed" title={
-						<Group align={'center'} position={ 'apart' }>
-							<Text>В урне новый мусор</Text>
-							<ActionIcon  className={classes.arrowButton}  size={'lg'} variant={ 'filled' } sx={{backgroundColor: '#F6F6F6'}}>
-								<ArrowNarrowRight size={ 28 }  color={ '#75CC72' }/>
-							</ActionIcon>
-						</Group>
-					}>
-						<Space h={ 50 } />
-					</Timeline.Item>
 
-					<Timeline.Item title="" bullet={<Number4 size={12} />}>
-						<Space h={ 50 } />
-					</Timeline.Item>
+					{/*<Timeline.Item bullet={<Check size={18}/>}*/}
+					{/*			   title={*/}
+					{/*				   <Group align={'center'} position={ 'apart' }>*/}
+					{/*					   <Text>Урна переполнена</Text>*/}
+					{/*					   <ActionIcon onClick={ () => onBinEventClick('Фоточка мусорки') } className={classes.arrowButton} size={'lg'} variant={ 'filled' } sx={{backgroundColor: '#F6F6F6'}}>*/}
+					{/*						   <ArrowNarrowRight size={ 28 }  color={ '#75CC72' }/>*/}
+					{/*					   </ActionIcon>*/}
+					{/*				   </Group>*/}
+					{/*			   }*/}
+					{/*>*/}
+					{/*	<Space h={ 50 } />*/}
+					{/*</Timeline.Item>*/}
+
+					{/*<Timeline.Item bullet={<Check size={18} />} title={*/}
+					{/*	<Group align={'center'} position={ 'apart' }>*/}
+					{/*		<Text>Урна пуста</Text>*/}
+					{/*		<ActionIcon  className={classes.arrowButton}  size={'lg'} variant={ 'filled' } sx={{backgroundColor: '#F6F6F6'}}>*/}
+					{/*			<ArrowNarrowRight size={ 28 }  color={ '#75CC72' }/>*/}
+					{/*		</ActionIcon>*/}
+					{/*	</Group>*/}
+					{/*}>*/}
+					{/*	<Space h={ 50 } />*/}
+					{/*</Timeline.Item>*/}
+
+					{/*<Timeline.Item bullet={<Number3 size={12} />} lineVariant="dashed" title={*/}
+					{/*	<Group align={'center'} position={ 'apart' }>*/}
+					{/*		<Text>В урне новый мусор</Text>*/}
+					{/*		<ActionIcon  className={classes.arrowButton}  size={'lg'} variant={ 'filled' } sx={{backgroundColor: '#F6F6F6'}}>*/}
+					{/*			<ArrowNarrowRight size={ 28 }  color={ '#75CC72' }/>*/}
+					{/*		</ActionIcon>*/}
+					{/*	</Group>*/}
+					{/*}>*/}
+					{/*	<Space h={ 50 } />*/}
+					{/*</Timeline.Item>*/}
+
+					{/*<Timeline.Item title="" bullet={<Number4 size={12} />}>*/}
+					{/*	<Space h={ 50 } />*/}
+					{/*</Timeline.Item>*/}
 				</Timeline>
 			</>
 		)
@@ -158,16 +182,45 @@ export const MapGarbage: FC<MapGarbageProps> =
 		districts,
 		objectManagerFilter
 	}) => {
-		const [selectedPoint, setSelectedPoint] = useState(cameras.features[0])
-		const [pointDrawerState, setPointDrawerState] = useState(false)
+		const [selectedPoint, setSelectedPoint] = useState<any>()
+		const [pointDrawerState, setPointDrawerState] = useState<boolean>(false)
 
+		const [events, setEvents] = useState([{id: 0, snapshots:{id: 0, name: '', imageUrl: '', time: ''}}])
 
 		const onPlacemarkClick = (point: any) => {
 			setSelectedPoint(point)
 			setPointDrawerState(true)
 			console.log(point)
 		}
-		console.log('map: ', cameras)
+
+		useEffect(() => {
+			if (selectedPoint){
+				const tempEvents: any[] = []
+
+				selectedPoint.properties.events.map((event:any) => {
+					appCamerasService.getEvents(selectedPoint.id)
+						.then((respEvent) => {
+							appCamerasService.getSnapshot(respEvent.snapshots[0].id)
+								.then((respSnap) => {
+									const tempEvent = {
+										'id': respEvent.id,
+										'snapshot': {
+											'id': respSnap.id,
+											'name': respSnap.objectClasses[0].nameToken,
+											'imageUrl': respSnap.time,
+											'time': respSnap.imageUrl
+										}
+									}
+									tempEvents.push(tempEvent)
+								})
+						})
+				})
+
+				setEvents(tempEvents)
+				console.log('useeff: ', tempEvents)
+			}
+		}, [pointDrawerState])
+
 		return <>
 			<YMaps>
 				{/* @ts-ignore*/}
@@ -204,38 +257,41 @@ export const MapGarbage: FC<MapGarbageProps> =
 					}
 				</Map>
 			</YMaps>
-			<Drawer
-				opened={ pointDrawerState }
-				onClose={() => setPointDrawerState(false)}
-				title={ <Text size={ 'xl' } weight={ '600' }>{ selectedPoint.properties.title }</Text> }
-				padding='xl'
-				size='xl'
-				zIndex={ 700 }
-			>
-				<Text>{ selectedPoint.properties.address }</Text>
-				<Group>
-					<Text
-						color={ '#5EB059' }
-						weight={ 600 }
-						sx={{
-							backgroundColor: '#EEFAEF',
-							padding: '5px 10px',
-							marginTop: '20px',
-						}}
-					>
-						{ selectedPoint.properties.contractor.title }
-					</Text>
-				</Group>
-				<Tabs sx={{marginTop: '40px'}}>
-					<Tabs.Tab label="Обзор" sx={{fontWeight: 600}}>
-						<TabOverview/>
-					</Tabs.Tab>
-					<Tabs.Tab label="События" sx={{fontWeight: 600}}>
-						<TabEvents/>
-					</Tabs.Tab>
-					<Tabs.Tab label="Отзывы" sx={{fontWeight: 600}}>Settings tab content</Tabs.Tab>
-				</Tabs>
+			{
+				selectedPoint &&
+				<Drawer
+					opened={ pointDrawerState }
+					onClose={() => setPointDrawerState(false)}
+					title={ <Text size={ 'xl' } weight={ '600' }>{ selectedPoint.properties.title }</Text> }
+					padding='xl'
+					size='xl'
+					zIndex={ 700 }
+				>
+					<Text>{ selectedPoint.properties.address }</Text>
+					<Group>
+						<Text
+							color={ '#5EB059' }
+							weight={ 600 }
+							sx={{
+								backgroundColor: '#EEFAEF',
+								padding: '5px 10px',
+								marginTop: '20px',
+							}}
+						>
+							{ selectedPoint.properties.contractor.title }
+						</Text>
+					</Group>
+					<Tabs sx={{marginTop: '40px'}}>
+						<Tabs.Tab label="Обзор" sx={{fontWeight: 600}}>
+							<TabOverview/>
+						</Tabs.Tab>
+						<Tabs.Tab label="События" sx={{fontWeight: 600}}>
+							<TabEvents events={ events }/>
+						</Tabs.Tab>
+						<Tabs.Tab label="Отзывы" sx={{fontWeight: 600}}>Settings tab content</Tabs.Tab>
+					</Tabs>
 
-			</Drawer>
+				</Drawer>
+			}
 		</>
 	}
