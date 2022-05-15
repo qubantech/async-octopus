@@ -167,18 +167,22 @@ export const MapGarbage: FC<MapGarbageProps> =
 			setPointDrawerState(true)
 			console.log(point)
 		}
-
+		console.log('map: ', cameras)
 		return <>
 			<YMaps>
 				{/* @ts-ignore*/}
 				<Map state={ state } width={'100%'} height={'100vh'}>
-					<ObjectManagerContainer
-						bins={ cameras }
-						onPlacemarkClick={ onPlacemarkClick }
-						objectManagerFilter={ objectManagerFilter }
-					/>
 					{
-						districts !== undefined &&
+
+						cameras.features.length > 2 &&
+						<ObjectManagerContainer
+							bins={ cameras }
+							onPlacemarkClick={ onPlacemarkClick }
+							objectManagerFilter={ objectManagerFilter }
+						/>
+					}
+					{
+						districts  &&
 						districts.map((district:any) => {
 							return (
 								<Polygon

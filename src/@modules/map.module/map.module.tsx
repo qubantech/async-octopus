@@ -93,8 +93,6 @@ export const Map = () => {
 	const [cameras, setCameras] = useState(initCameras)
 
 	useEffect(() => {
-		let dist: { value: string; label: string }[] | { nameToken: any }[] = []
-		let contr: any[] = []
 		appCamerasService.getZones()
 			.then((resp)=> {
 				setDistricts(resp)
@@ -104,75 +102,77 @@ export const Map = () => {
 						label: item.nameToken
 					}
 				})
-				const tempFilter2 = filterDistricts.concat(tempFilter)
-				dist = tempFilter2
-				setFilterDistricts(tempFilter2)
-			})
-		appContractorService.getContractors()
-			.then(resp => {
-				const tempFilter = resp.map((item) => {
-					return {
-						value: item.id.toString(),
-						label: item.legalEntityName
-					}
-				})
-				const tempFilter2 = filterContractors.concat(tempFilter)
-				contr = tempFilter2
-				setFilterContractors(tempFilter2)
-			})
-		appCamerasService.getCameras()
-			.then((resp) => {
-				console.log(filterContractors)
+				const dist = filterDistricts.concat(tempFilter)
+				setFilterDistricts(dist)
 
-				const tempCameras = {
-					'type': 'FeatureCollection',
-					'features': []
-				}
-				resp.map((item:any) => {
-					const categoryID = getRandomInt(2) == 1 ?  'full' : 'empty'
-					const districtID = getRandomInt(13)
-					const contractorID = getRandomInt(9)
+				appContractorService.getContractors()
+					.then(resp => {
+						const tempFilter = resp.map((item) => {
+							return {
+								value: item.id.toString(),
+								label: item.legalEntityName
+							}
+						})
+						const contr = filterContractors.concat(tempFilter)
+						setFilterContractors(contr)
 
-					const tempElement = {
-						'type': 'Feature',
-						'id': item.id,
-						'geometry': {
-							'type': 'Point',
-							'coordinates': [
-								item.latitude,
-								item.longitude
-							]
-						},
-						'properties': {
-							'title': 'Camera ' + item.id,
-							'description': item.description,
-							'address': item.address,
-							'category':{
-								'id': categoryID,
-							},
-							'district': {
-								'id': districtID.toString(),
-								//@ts-ignore
-								'title': dist[districtID].nameToken
-							},
-							'contractor': {
-								'id':  contractorID.toString(),
-								'title': contr[contractorID].label
-							},
-							'hintContent': item.address,
-						},
-						'options': {
-							iconLayout: 'default#image',
-							iconImageHref: placemark,
-							iconImageSize: [30, 49],
-						}
-					}
-					// @ts-ignore
-					tempCameras.features.push(tempElement)
-				})
-				setCameras(tempCameras)
+						appCamerasService.getCameras()
+							.then((resp) => {
+								const tempCameras = {
+									'type': 'FeatureCollection',
+									'features': []
+								}
+								resp.map((item:any) => {
+									const categoryID = getRandomInt(2) == 1 ?  'full' : 'empty'
+									const districtID = getRandomInt(13)
+									const contractorID = getRandomInt(9)
+
+									const tempElement = {
+										'type': 'Feature',
+										'id': item.id,
+										'geometry': {
+											'type': 'Point',
+											'coordinates': [
+												item.latitude,
+												item.longitude
+											]
+										},
+										'properties': {
+											'title': 'Камера ' + item.id,
+											'description': item.description,
+											'address': item.address,
+											'category':{
+												'id': categoryID,
+											},
+											'district': {
+												'id': districtID.toString(),
+												//@ts-ignore
+												'title': dist[districtID].nameToken
+											},
+											'contractor': {
+												'id':  contractorID.toString(),
+												'title': contr[contractorID].label
+											},
+											'hintContent': item.address,
+										},
+										'options': {
+											iconLayout: 'default#image',
+											iconImageHref: placemark,
+											iconImageSize: [30, 49],
+										}
+									}
+									// @ts-ignore
+									tempCameras.features.push(tempElement)
+								})
+								setCameras(tempCameras)
+							})
+
+					})
 			})
+
+
 	},[])
+
 
 	const onDistrictChange = (district: string) => {
 		setObjectManagerFilter( () => (object:any) => {
