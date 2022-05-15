@@ -96,6 +96,7 @@ export const Map = () => {
 		appCamerasService.getZones()
 			.then((resp)=> {
 				setDistricts(resp)
+				console.log('1212323132: ', resp)
 				const tempFilter = resp.map((item) => {
 					return {
 						value: item.id.toString(),
@@ -127,9 +128,6 @@ export const Map = () => {
 									const districtID = getRandomInt(13)
 									const contractorID = getRandomInt(9)
 
-									console.log('5555555: ', item.events )
-
-
 									const tempElement = {
 										'type': 'Feature',
 										'id': item.id,
@@ -148,9 +146,9 @@ export const Map = () => {
 												'id': categoryID,
 											},
 											'district': {
-												'id': districtID.toString(),
+												'id': '2',
 												//@ts-ignore
-												'title': dist[districtID].nameToken
+												'title': 'Центр'
 											},
 											'contractor': {
 												'id':  contractorID.toString(),
@@ -181,8 +179,8 @@ export const Map = () => {
 	const onDistrictChange = (district: string) => {
 		setObjectManagerFilter( () => (object:any) => {
 			const isCategory = category === '' || object.properties.category.id === category
-			const isDistrict = district === '' || object.properties.district.title === district
-			const isContractor = contractor === '' || object.properties.contractor.title === contractor
+			const isDistrict = district === '' || object.properties.district.id === district
+			const isContractor = contractor === '' || object.properties.contractor.id === contractor
 			return isCategory && isDistrict && isContractor
 		})
 
@@ -191,9 +189,9 @@ export const Map = () => {
 
 	const onContractorChange = (contractor: string) => {
 		setObjectManagerFilter( () => (object:any) => {
-			const isCategory = category === '' || object.properties.category === category
-			const isDistrict = district === '' || object.properties.district === district
-			const isContractor = contractor === '' || object.properties.contractor === contractor
+			const isCategory = category === '' || object.properties.category.id === category
+			const isDistrict = district === '' || object.properties.district.id === district
+			const isContractor = contractor === '' || object.properties.contractor.id === contractor
 			return isCategory && isDistrict && isContractor
 		})
 
@@ -202,9 +200,9 @@ export const Map = () => {
 
 	const onCategoryChange = (category: string) => {
 		setObjectManagerFilter( () => (object:any) => {
-			const isCategory = category === '' || object.properties.category === category
-			const isDistrict = district === '' || object.properties.district === district
-			const isContractor = contractor === '' || object.properties.contractor === contractor
+			const isCategory = category === '' || object.properties.category.id === category
+			const isDistrict = district === '' || object.properties.district.id === district
+			const isContractor = contractor === '' || object.properties.contractor.id === contractor
 			return isCategory && isDistrict && isContractor
 		})
 

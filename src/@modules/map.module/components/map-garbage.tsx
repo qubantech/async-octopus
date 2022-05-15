@@ -35,12 +35,15 @@ const TabEvents = (props:{events:any}) => {
 				<Modal
 					opened={isBinOpen}
 					onClose={() => setIsBinOpen(false)}
-					title="Адрес камеры"
+					title={ props.events[0] ? props.events[0].camera : '' }
 					zIndex={ 800 }
+					size={ 'xl' }
 				>
-					<Text>{ binPhoto }</Text>
+					<Image src={ binPhoto } />
+
+
 				</Modal>
-				<Timeline active={2} bulletSize={24} lineWidth={4} sx={{marginTop: '20px',}}>
+				<Timeline active={5} bulletSize={24} lineWidth={4} sx={{marginTop: '20px',}}>
 
 					{
 						props.events.map((event:any) => {
@@ -55,6 +58,8 @@ const TabEvents = (props:{events:any}) => {
 												   </Group>
 											   }
 								>
+									<Text color="dimmed" size="sm">Дата: { event.snapshot.time } </Text>
+									{/*<Text size="xs" mt={4}>2 hours ago</Text>*/}
 									<Space h={ 50 } />
 								</Timeline.Item>
 							)
@@ -204,6 +209,7 @@ export const MapGarbage: FC<MapGarbageProps> =
 								.then((respSnap) => {
 									const tempEvent = {
 										'id': respEvent.id,
+										'camera': selectedPoint.properties.title,
 										'snapshot': {
 											'id': respSnap.id,
 											'name': respSnap.objectClasses[0].nameToken,

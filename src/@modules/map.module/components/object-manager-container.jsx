@@ -13,6 +13,7 @@ const ObjectManagerContainer = ({ bins, onPlacemarkClick, objectManagerFilter })
 				clusters={{
 					preset: 'islands#greenClusterIcons',
 				}}
+
 				features={ bins }
 				filter={ objectManagerFilter }
 				instanceRef={ref =>
